@@ -45,7 +45,7 @@ def consistency(input_file: str, output: Optional[str], verbose: bool) -> None:
         # Import the consistency tester
         from ..cross_provider import CrossProviderConsistencyTester
 
-        tester = CrossProviderConsistencyTester()  # type: ignore[no-untyped-call]
+        tester = CrossProviderConsistencyTester()
 
         with Progress(
             SpinnerColumn(),
@@ -137,7 +137,7 @@ def performance(input_file: str, iterations: int, output: Optional[str], verbose
         # Import the performance benchmark
         from ..cross_provider import PerformanceBenchmark
 
-        benchmark = PerformanceBenchmark()  # type: ignore[no-untyped-call]
+        benchmark = PerformanceBenchmark()
 
         with Progress(
             SpinnerColumn(),
@@ -228,7 +228,7 @@ def quality(input_file: str, output: Optional[str], verbose: bool) -> None:
         # Import the quality comparator
         from ..cross_provider import QualityComparator
 
-        comparator = QualityComparator()  # type: ignore[no-untyped-call]
+        comparator = QualityComparator()
 
         with Progress(
             SpinnerColumn(),

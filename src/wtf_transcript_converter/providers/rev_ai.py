@@ -26,7 +26,7 @@ from wtf_transcript_converter.utils.time_utils import get_current_iso_timestamp
 class RevAIConverter(BaseProviderConverter):
     """Converter for Rev.ai JSON format to/from WTF format."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("rev_ai")
 
     provider_name: str = "rev_ai"
@@ -87,6 +87,7 @@ class RevAIConverter(BaseProviderConverter):
                     end=end_time,
                     text=element_value,
                     confidence=normalize_confidence(confidence, "rev_ai"),
+                    speaker=None,
                     is_punctuation=self._detect_punctuation(element_value),
                 )
                 wtf_words.append(wtf_word)
@@ -112,10 +113,15 @@ class RevAIConverter(BaseProviderConverter):
 
                     wtf_segment = WTFSegment(
                         id=segment_id,
-                        start=current_segment_start,
-                        end=current_segment_end,
+                        start=(
+                            float(current_segment_start)
+                            if current_segment_start is not None
+                            else 0.0
+                        ),
+                        end=float(current_segment_end) if current_segment_end is not None else 0.0,
                         text=current_segment_text.strip(),
                         confidence=segment_confidence,
+                        speaker=None,
                         words=current_segment_words.copy(),
                     )
                     wtf_segments.append(wtf_segment)
@@ -138,10 +144,11 @@ class RevAIConverter(BaseProviderConverter):
 
             wtf_segment = WTFSegment(
                 id=segment_id,
-                start=current_segment_start,
-                end=current_segment_end,
+                start=float(current_segment_start) if current_segment_start is not None else 0.0,
+                end=float(current_segment_end) if current_segment_end is not None else 0.0,
                 text=current_segment_text.strip(),
                 confidence=segment_confidence,
+                speaker=None,
                 words=current_segment_words,
             )
             wtf_segments.append(wtf_segment)
@@ -158,6 +165,7 @@ class RevAIConverter(BaseProviderConverter):
                 end=last_word.end,
                 text=transcript.text,  # Use the full transcript text
                 confidence=segment_confidence,
+                speaker=None,
                 words=[w.id for w in wtf_words],
             )
             wtf_segments.append(wtf_segment)
@@ -182,7 +190,13 @@ class RevAIConverter(BaseProviderConverter):
         current_time = get_current_iso_timestamp()
         audio_duration = rev_ai_data.get("duration_seconds", 0.0)
 
-        audio_metadata = WTFAudio(duration=audio_duration)
+        audio_metadata = WTFAudio(
+            duration=audio_duration,
+            sample_rate=None,
+            channels=None,
+            format=None,
+            bitrate=None,
+        )
 
         metadata = WTFMetadata(
             created_at=rev_ai_data.get("created_on", current_time),
@@ -232,11 +246,14 @@ class RevAIConverter(BaseProviderConverter):
         return WTFDocument(
             transcript=transcript,
             segments=wtf_segments,
+            metadata=metadata,
             words=wtf_words if wtf_words else None,
             speakers=speakers if speakers else None,
-            metadata=metadata,
-            quality=quality,
+            alternatives=None,
+            enrichments=None,
             extensions=extensions if extensions else None,
+            quality=quality,
+            streaming=None,
         )
 
     def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
@@ -329,14 +346,14 @@ class RevAIConverter(BaseProviderConverter):
 
     def _extract_language(self, rev_ai_data: Dict[str, Any]) -> str:
         """Extract and normalize language code from Rev.ai data."""
-        lang = rev_ai_data.get("language", "en").lower()
+        lang = str(rev_ai_data.get("language", "en")).lower()
         if not is_valid_bcp47(lang):
             return f"{lang}-us"  # Default to US English
         return lang
 
     def _extract_model(self, rev_ai_data: Dict[str, Any]) -> str:
         """Extract model name from Rev.ai data."""
-        transcriber = rev_ai_data.get("transcriber", "default")
+        transcriber = str(rev_ai_data.get("transcriber", "default"))
         return f"rev-ai-{transcriber}"
 
     def _calculate_overall_confidence(self, rev_ai_data: Dict[str, Any]) -> float:
@@ -372,6 +389,11 @@ class RevAIConverter(BaseProviderConverter):
         )
 
         return WTFQuality(
+            audio_quality=None,
+            background_noise=None,
+            multiple_speakers=None,
+            overlapping_speech=None,
+            silence_ratio=None,
             average_confidence=average_confidence,
             low_confidence_words=low_confidence_words,
             processing_warnings=rev_ai_data.get("warnings", []),

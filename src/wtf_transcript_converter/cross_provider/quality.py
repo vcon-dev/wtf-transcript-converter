@@ -45,7 +45,7 @@ class QualityMetrics:
 class QualityComparator:
     """Compare quality across multiple providers."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers = {
             "whisper": WhisperConverter(),
             "deepgram": DeepgramConverter(),
@@ -86,7 +86,7 @@ class QualityComparator:
 
         try:
             converter = self.providers[provider_name]
-            wtf_doc = converter.convert_to_wtf(sample_data)
+            wtf_doc = converter.convert(sample_data)
 
             # Basic metrics
             overall_confidence = wtf_doc.transcript.confidence
@@ -385,7 +385,7 @@ class TestQualityComparison:
     """Test cases for quality comparison."""
 
     @pytest.fixture
-    def quality_comparator(self):
+    def quality_comparator(self) -> QualityComparator:
         """Create a quality comparator instance."""
         return QualityComparator()
 
@@ -454,7 +454,7 @@ class TestQualityComparison:
             ],
         }
 
-    def test_single_provider_quality(self, quality_comparator, sample_data):
+    def test_single_provider_quality(self, quality_comparator: Any, sample_data: Any) -> None:
         """Test quality analysis for a single provider."""
         metrics = quality_comparator.analyze_quality("whisper", sample_data)
 
@@ -467,7 +467,7 @@ class TestQualityComparison:
         assert metrics.segment_count > 0, "Should have segments"
         assert 0.0 <= metrics.avg_word_confidence <= 1.0, "Invalid word confidence"
 
-    def test_all_providers_quality(self, quality_comparator, sample_data):
+    def test_all_providers_quality(self, quality_comparator: Any, sample_data: Any) -> None:
         """Test quality comparison across all providers."""
         results = quality_comparator.compare_quality_across_providers(sample_data)
 
@@ -482,7 +482,7 @@ class TestQualityComparison:
         report = quality_comparator.generate_quality_report(results)
         print("\n" + report)
 
-    def test_quality_analysis(self, quality_comparator, sample_data):
+    def test_quality_analysis(self, quality_comparator: Any, sample_data: Any) -> None:
         """Test quality analysis."""
         results = quality_comparator.compare_quality_across_providers(sample_data)
         analysis = quality_comparator.analyze_quality_comparison(results)
@@ -498,7 +498,7 @@ class TestQualityComparison:
             assert "best_performers" in analysis
             assert "provider_details" in analysis
 
-    def test_quality_report_generation(self, quality_comparator, sample_data):
+    def test_quality_report_generation(self, quality_comparator: Any, sample_data: Any) -> None:
         """Test quality report generation."""
         results = quality_comparator.compare_quality_across_providers(sample_data)
         report = quality_comparator.generate_quality_report(results)
@@ -510,7 +510,7 @@ class TestQualityComparison:
         # Report should be non-empty
         assert len(report) > 100, "Report should be substantial"
 
-    def test_punctuation_accuracy_assessment(self, quality_comparator):
+    def test_punctuation_accuracy_assessment(self, quality_comparator: Any) -> None:
         """Test punctuation accuracy assessment."""
         # Create a mock WTF document with punctuation
         from wtf_transcript_converter.core.models import (
@@ -528,6 +528,7 @@ class TestQualityComparison:
                 end=0.5,
                 text="Hello,",
                 confidence=0.99,
+                speaker=None,
                 is_punctuation=True,
             ),
             WTFWord(
@@ -536,6 +537,7 @@ class TestQualityComparison:
                 end=1.0,
                 text="world!",
                 confidence=0.98,
+                speaker=None,
                 is_punctuation=True,
             ),
         ]
@@ -547,6 +549,7 @@ class TestQualityComparison:
                 end=1.0,
                 text="Hello, world!",
                 confidence=0.99,
+                speaker=None,
                 words=[0, 1],
             )
         ]
@@ -554,23 +557,40 @@ class TestQualityComparison:
         transcript = WTFTranscript(
             text="Hello, world!", language="en", duration=1.0, confidence=0.99
         )
-        audio = WTFAudio(duration=1.0)
+        audio = WTFAudio(
+            duration=1.0,
+            sample_rate=None,
+            channels=None,
+            format=None,
+            bitrate=None,
+        )
         metadata = WTFMetadata(
             created_at="2024-01-01T00:00:00Z",
             processed_at="2024-01-01T00:00:00Z",
             provider="test",
             model="test",
+            processing_time=None,
             audio=audio,
+            options={},
         )
 
         wtf_doc = WTFDocument(
-            transcript=transcript, segments=segments, words=words, metadata=metadata
+            transcript=transcript,
+            segments=segments,
+            metadata=metadata,
+            words=words,
+            speakers=None,
+            alternatives=None,
+            enrichments=None,
+            extensions=None,
+            quality=None,
+            streaming=None,
         )
 
         accuracy = quality_comparator._assess_punctuation_accuracy(wtf_doc)
         assert 0.0 <= accuracy <= 1.0, "Punctuation accuracy should be between 0 and 1"
 
-    def test_text_completeness_assessment(self, quality_comparator):
+    def test_text_completeness_assessment(self, quality_comparator: Any) -> None:
         """Test text completeness assessment."""
         from wtf_transcript_converter.core.models import (
             WTFAudio,
@@ -582,17 +602,46 @@ class TestQualityComparison:
         transcript = WTFTranscript(
             text="Hello world", language="en", duration=1.0, confidence=0.99
         )
-        segments = [WTFSegment(id=0, start=0.0, end=1.0, text="Hello world", confidence=0.99)]
-        audio = WTFAudio(duration=1.0)
+        segments = [
+            WTFSegment(
+                id=0,
+                start=0.0,
+                end=1.0,
+                text="Hello world",
+                confidence=0.99,
+                speaker=None,
+                words=None,
+            )
+        ]
+        audio = WTFAudio(
+            duration=1.0,
+            sample_rate=None,
+            channels=None,
+            format=None,
+            bitrate=None,
+        )
         metadata = WTFMetadata(
             created_at="2024-01-01T00:00:00Z",
             processed_at="2024-01-01T00:00:00Z",
             provider="test",
             model="test",
+            processing_time=None,
             audio=audio,
+            options={},
         )
 
-        wtf_doc = WTFDocument(transcript=transcript, segments=segments, metadata=metadata)
+        wtf_doc = WTFDocument(
+            transcript=transcript,
+            segments=segments,
+            metadata=metadata,
+            words=None,
+            speakers=None,
+            alternatives=None,
+            enrichments=None,
+            extensions=None,
+            quality=None,
+            streaming=None,
+        )
         original_data = {"text": "Hello world test"}
 
         completeness = quality_comparator._assess_text_completeness(wtf_doc, original_data)

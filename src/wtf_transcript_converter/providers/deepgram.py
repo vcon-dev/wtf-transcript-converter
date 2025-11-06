@@ -24,7 +24,7 @@ from ..utils.language_utils import normalize_language_code
 class DeepgramConverter(ToWTFConverter, FromWTFConverter):
     """Converter for Deepgram JSON format to/from WTF format."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.provider_name = "deepgram"
 
     def convert_to_wtf(self, deepgram_data: Dict[str, Any]) -> WTFDocument:
@@ -92,6 +92,10 @@ class DeepgramConverter(ToWTFConverter, FromWTFConverter):
         # Create quality metrics
         quality = WTFQuality(
             audio_quality=self._assess_audio_quality(alternative),
+            background_noise=None,
+            multiple_speakers=None,
+            overlapping_speech=None,
+            silence_ratio=None,
             average_confidence=transcript.confidence,
             low_confidence_words=self._count_low_confidence_words(words),
             processing_warnings=self._extract_warnings(deepgram_data),
@@ -114,8 +118,11 @@ class DeepgramConverter(ToWTFConverter, FromWTFConverter):
             metadata=metadata,
             words=words,
             speakers=speakers,
-            quality=quality,
+            alternatives=None,
+            enrichments=None,
             extensions=extensions,
+            quality=quality,
+            streaming=None,
         )
 
     def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
@@ -189,13 +196,13 @@ class DeepgramConverter(ToWTFConverter, FromWTFConverter):
         """Extract and normalize language from Deepgram metadata."""
         # Deepgram doesn't always provide language in metadata
         # Default to English if not specified
-        return normalize_language_code("en")
+        return str(normalize_language_code("en"))
 
     def _extract_model_info(self, metadata: Dict[str, Any]) -> str:
         """Extract model information from Deepgram metadata."""
         model_info = metadata.get("model_info", {})
         if model_info:
-            return model_info.get("name", "deepgram-model")
+            return str(model_info.get("name", "deepgram-model"))
         return "deepgram-model"
 
     def _convert_words_to_segments(
@@ -282,7 +289,7 @@ class DeepgramConverter(ToWTFConverter, FromWTFConverter):
             return None
 
         # Group words by speaker
-        speaker_words = {}
+        speaker_words: dict[str, list[Dict[str, Any]]] = {}
         for word_data in words_data:
             speaker_id = word_data.get("speaker", 0)
             if speaker_id not in speaker_words:

@@ -51,7 +51,7 @@ class ValidationError(Exception):
         message: str,
         field: Optional[str] = None,
         value: Optional[Any] = None,
-        errors: Optional[list] = None,
+        errors: Optional[list[str]] = None,
     ) -> None:
         super().__init__(message)
         self.message = message

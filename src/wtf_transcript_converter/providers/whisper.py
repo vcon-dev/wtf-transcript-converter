@@ -24,7 +24,7 @@ from ..utils.language_utils import normalize_language_code
 class WhisperConverter(ToWTFConverter, FromWTFConverter):
     """Converter for Whisper JSON format to/from WTF format."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.provider_name = "whisper"
 
     def convert_to_wtf(self, whisper_data: Dict[str, Any]) -> WTFDocument:
@@ -59,6 +59,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
                 text=segment_data.get("text", ""),
                 confidence=self._normalize_whisper_confidence(segment_data),
                 speaker=0,  # Whisper doesn't do speaker diarization by default
+                words=None,  # Will be set later if words are available
             )
             segments.append(segment)
 
@@ -93,6 +94,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
                 sample_rate=whisper_data.get("sample_rate"),
                 channels=whisper_data.get("channels"),
                 format=whisper_data.get("format"),
+                bitrate=None,
             ),
             options=self._extract_whisper_options(whisper_data),
         )
@@ -100,6 +102,10 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
         # Create quality metrics
         quality = WTFQuality(
             audio_quality=self._assess_audio_quality(whisper_data),
+            background_noise=None,
+            multiple_speakers=None,
+            overlapping_speech=None,
+            silence_ratio=None,
             average_confidence=transcript.confidence,
             low_confidence_words=self._count_low_confidence_words(words),
             processing_warnings=self._extract_warnings(whisper_data),
@@ -121,8 +127,12 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
             segments=segments,
             metadata=metadata,
             words=words if words else None,
-            quality=quality,
+            speakers=None,
+            alternatives=None,
+            enrichments=None,
             extensions=extensions,
+            quality=quality,
+            streaming=None,
         )
 
     def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
@@ -267,19 +277,19 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
 
     def _extract_temperature(self, whisper_data: Dict[str, Any]) -> float:
         """Extract temperature from Whisper data."""
-        return whisper_data.get("temperature", 0.0)
+        return float(whisper_data.get("temperature", 0.0))
 
     def _extract_compression_ratio(self, whisper_data: Dict[str, Any]) -> float:
         """Extract compression ratio from Whisper data."""
-        return whisper_data.get("compression_ratio", 1.0)
+        return float(whisper_data.get("compression_ratio", 1.0))
 
     def _extract_avg_logprob(self, whisper_data: Dict[str, Any]) -> float:
         """Extract average log probability from Whisper data."""
-        return whisper_data.get("avg_logprob", -0.5)
+        return float(whisper_data.get("avg_logprob", -0.5))
 
     def _extract_no_speech_prob(self, whisper_data: Dict[str, Any]) -> float:
         """Extract no speech probability from Whisper data."""
-        return whisper_data.get("no_speech_prob", 0.01)
+        return float(whisper_data.get("no_speech_prob", 0.01))
 
     def _extract_tokens(self, whisper_data: Dict[str, Any]) -> List[int]:
         """Extract tokens from Whisper data."""

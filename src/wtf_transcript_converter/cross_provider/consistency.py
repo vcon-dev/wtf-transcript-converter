@@ -6,7 +6,7 @@ WTF format consistency and validate standardization.
 """
 
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 from wtf_transcript_converter.core.models import WTFDocument
 from wtf_transcript_converter.core.validator import validate_wtf_document
@@ -25,7 +25,7 @@ class ConsistencyResult:
     """Result of cross-provider consistency testing."""
 
     provider: str
-    wtf_doc: WTFDocument
+    wtf_doc: Optional[WTFDocument]
     is_valid: bool
     validation_errors: List[str]
     processing_time: float
@@ -38,7 +38,7 @@ class ConsistencyResult:
 class CrossProviderConsistencyTester:
     """Test consistency across multiple transcription providers."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers = {
             "whisper": WhisperConverter(),
             "deepgram": DeepgramConverter(),
@@ -65,7 +65,7 @@ class CrossProviderConsistencyTester:
         for provider_name, converter in self.providers.items():
             try:
                 # Convert to WTF
-                wtf_doc = converter.convert_to_wtf(sample_data)
+                wtf_doc = converter.convert(sample_data)
 
                 # Validate WTF document
                 is_valid, validation_errors = validate_wtf_document(wtf_doc)
@@ -196,14 +196,15 @@ class CrossProviderConsistencyTester:
             },
         }
 
-    def _calculate_std(self, values: List[float]) -> float:
+    def _calculate_std(self, values: Sequence[Union[int, float]]) -> float:
         """Calculate standard deviation."""
         if len(values) <= 1:
             return 0.0
 
-        mean = sum(values) / len(values)
-        variance = sum((x - mean) ** 2 for x in values) / (len(values) - 1)
-        return variance**0.5
+        float_values = [float(x) for x in values]
+        mean = sum(float_values) / len(float_values)
+        variance = sum((x - mean) ** 2 for x in float_values) / (len(float_values) - 1)
+        return float(variance**0.5)
 
     def generate_consistency_report(self, results: List[ConsistencyResult]) -> str:
         """Generate a human-readable consistency report."""

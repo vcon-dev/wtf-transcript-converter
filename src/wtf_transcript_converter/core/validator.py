@@ -89,7 +89,7 @@ def _validate_timing_consistency(doc: WTFDocument) -> List[str]:
 
 def _validate_speaker_consistency(doc: WTFDocument) -> List[str]:
     """Validate speaker consistency across the document."""
-    errors = []
+    errors: List[str] = []
 
     if not doc.speakers or not doc.segments:
         return errors
@@ -117,7 +117,7 @@ def _validate_speaker_consistency(doc: WTFDocument) -> List[str]:
 
 def _validate_word_segment_consistency(doc: WTFDocument) -> List[str]:
     """Validate word-segment consistency."""
-    errors = []
+    errors: List[str] = []
 
     if not doc.words or not doc.segments:
         return errors

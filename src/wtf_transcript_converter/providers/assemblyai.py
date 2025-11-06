@@ -24,7 +24,7 @@ from ..utils.language_utils import normalize_language_code
 class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
     """Converter for AssemblyAI JSON format to/from WTF format."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.provider_name = "assemblyai"
 
     def convert_to_wtf(self, assemblyai_data: Dict[str, Any]) -> WTFDocument:
@@ -73,6 +73,10 @@ class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
         # Create quality metrics
         quality = WTFQuality(
             audio_quality=self._assess_audio_quality(assemblyai_data),
+            background_noise=None,
+            multiple_speakers=None,
+            overlapping_speech=None,
+            silence_ratio=None,
             average_confidence=transcript.confidence,
             low_confidence_words=self._count_low_confidence_words(words),
             processing_warnings=self._extract_warnings(assemblyai_data),
@@ -133,8 +137,11 @@ class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
             metadata=metadata,
             words=words,
             speakers=speakers,
-            quality=quality,
+            alternatives=None,
+            enrichments=None,
             extensions=extensions,
+            quality=quality,
+            streaming=None,
         )
 
     def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
@@ -198,7 +205,7 @@ class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
     def _extract_language(self, assemblyai_data: Dict[str, Any]) -> str:
         """Extract and normalize language from AssemblyAI data."""
         language_code = assemblyai_data.get("language_code", "en")
-        return normalize_language_code(language_code)
+        return str(normalize_language_code(language_code))
 
     def _extract_model_info(self, assemblyai_data: Dict[str, Any]) -> str:
         """Extract model information from AssemblyAI data."""
@@ -210,7 +217,7 @@ class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
         """Calculate overall confidence from AssemblyAI data."""
         words = assemblyai_data.get("words", [])
         if not words:
-            return assemblyai_data.get("confidence", 0.0)
+            return float(assemblyai_data.get("confidence", 0.0))
 
         # Calculate average confidence from words
         confidences = [word.get("confidence", 0.0) for word in words]
@@ -272,7 +279,7 @@ class AssemblyAIConverter(ToWTFConverter, FromWTFConverter):
             return None
 
         # Group words by speaker
-        speaker_words = {}
+        speaker_words: dict[str, list[Dict[str, Any]]] = {}
         for word_data in words:
             speaker_id = word_data.get("speaker", "A")
             if speaker_id not in speaker_words:

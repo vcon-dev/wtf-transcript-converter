@@ -46,14 +46,14 @@ class ParakeetConverter(BaseProviderConverter):
         self,
         provider_name: str = "parakeet",
         model_name: str = "nvidia/parakeet-tdt-0.6b-v3",
-    ):
+    ) -> None:
         super().__init__(provider_name)
         self.model_name = model_name
         self._pipeline = None
         self._tokenizer = None
         self._model = None
 
-    def _load_model(self):
+    def _load_model(self) -> None:
         """Load the Parakeet model and tokenizer."""
         if not HF_AVAILABLE:
             raise ImportError(
@@ -95,6 +95,8 @@ class ParakeetConverter(BaseProviderConverter):
             audio, sample_rate = librosa.load(audio_path, sr=16000)
 
             # Transcribe using the pipeline
+            if self._pipeline is None:
+                raise RuntimeError("Pipeline not loaded")
             result = self._pipeline(
                 audio,
                 return_timestamps=True,
@@ -212,7 +214,11 @@ class ParakeetConverter(BaseProviderConverter):
         audio_duration = parakeet_data.get("duration", 0.0)
 
         audio_metadata = WTFAudio(
-            duration=audio_duration, sample_rate=parakeet_data.get("sample_rate", 16000)
+            duration=audio_duration,
+            sample_rate=parakeet_data.get("sample_rate", 16000),
+            channels=None,
+            format=None,
+            bitrate=None,
         )
 
         metadata = WTFMetadata(
@@ -241,11 +247,14 @@ class ParakeetConverter(BaseProviderConverter):
         return WTFDocument(
             transcript=transcript,
             segments=wtf_segments,
+            metadata=metadata,
             words=wtf_words if wtf_words else None,
             speakers=speakers if speakers else None,
-            metadata=metadata,
-            quality=quality,
+            alternatives=None,
+            enrichments=None,
             extensions=extensions if extensions else None,
+            quality=quality,
+            streaming=None,
         )
 
     def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
@@ -315,8 +324,8 @@ class ParakeetConverter(BaseProviderConverter):
         if not words:
             return 0.0
 
-        confidences = [word.get("confidence", 0.0) for word in words]
-        return sum(confidences) / len(confidences)
+        confidences = [float(word.get("confidence", 0.0)) for word in words]
+        return float(sum(confidences) / len(confidences))
 
     def _extract_speakers(self, words_data: List[Dict[str, Any]]) -> Dict[str, WTFSpeaker]:
         """Extract speaker information from Parakeet words data."""
@@ -394,11 +403,16 @@ class ParakeetConverter(BaseProviderConverter):
         )
 
         return WTFQuality(
-            average_confidence=average_confidence,
-            low_confidence_words=low_confidence_words,
             audio_quality=(
                 "high"
                 if average_confidence > 0.8
                 else "medium" if average_confidence > 0.6 else "low"
             ),
+            background_noise=None,
+            multiple_speakers=None,
+            overlapping_speech=None,
+            silence_ratio=None,
+            average_confidence=average_confidence,
+            low_confidence_words=low_confidence_words,
+            processing_warnings=[],
         )

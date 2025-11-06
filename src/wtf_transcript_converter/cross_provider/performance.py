@@ -39,7 +39,7 @@ class PerformanceMetrics:
 class PerformanceBenchmark:
     """Benchmark performance across multiple providers."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers = {
             "whisper": WhisperConverter(),
             "deepgram": DeepgramConverter(),
@@ -89,7 +89,8 @@ class PerformanceBenchmark:
 
                 # Time the conversion
                 start_time = time.time()
-                wtf_doc = converter.convert_to_wtf(sample_data)
+                # Convert using the convert method (ToWTFConverter interface)
+                wtf_doc = converter.convert(sample_data)
                 end_time = time.time()
 
                 # Measure memory after
@@ -299,7 +300,7 @@ class TestPerformanceBenchmark:
     """Test cases for performance benchmarking."""
 
     @pytest.fixture
-    def benchmark(self):
+    def benchmark(self) -> PerformanceBenchmark:
         """Create a performance benchmark instance."""
         return PerformanceBenchmark()
 
@@ -366,7 +367,7 @@ class TestPerformanceBenchmark:
             ],
         }
 
-    def test_single_provider_benchmark(self, benchmark, sample_data):
+    def test_single_provider_benchmark(self, benchmark: Any, sample_data: Any) -> None:
         """Test benchmarking a single provider."""
         metrics = benchmark.benchmark_provider("whisper", sample_data, iterations=2)
 
@@ -377,7 +378,7 @@ class TestPerformanceBenchmark:
         assert metrics.conversion_time > 0, "Conversion time should be positive"
         assert metrics.wtf_doc_size_kb > 0, "WTF document size should be positive"
 
-    def test_all_providers_benchmark(self, benchmark, sample_data):
+    def test_all_providers_benchmark(self, benchmark: Any, sample_data: Any) -> None:
         """Test benchmarking all providers."""
         results = benchmark.benchmark_all_providers(sample_data, iterations=2)
 
@@ -392,7 +393,7 @@ class TestPerformanceBenchmark:
         report = benchmark.generate_performance_report(results)
         print("\n" + report)
 
-    def test_performance_analysis(self, benchmark, sample_data):
+    def test_performance_analysis(self, benchmark: Any, sample_data: Any) -> None:
         """Test performance analysis."""
         results = benchmark.benchmark_all_providers(sample_data, iterations=2)
         analysis = benchmark.analyze_performance(results)
@@ -409,7 +410,7 @@ class TestPerformanceBenchmark:
             assert "memory_usage" in analysis["metrics"]
             assert "output_size" in analysis["metrics"]
 
-    def test_performance_report_generation(self, benchmark, sample_data):
+    def test_performance_report_generation(self, benchmark: Any, sample_data: Any) -> None:
         """Test performance report generation."""
         results = benchmark.benchmark_all_providers(sample_data, iterations=2)
         report = benchmark.generate_performance_report(results)
@@ -421,7 +422,7 @@ class TestPerformanceBenchmark:
         # Report should be non-empty
         assert len(report) > 100, "Report should be substantial"
 
-    def test_benchmark_with_empty_data(self, benchmark):
+    def test_benchmark_with_empty_data(self, benchmark: Any) -> None:
         """Test benchmarking with empty data."""
         empty_data = {
             "text": "",
@@ -441,7 +442,7 @@ class TestPerformanceBenchmark:
         # At least the basic converters should handle empty data
         assert len(successful_results) >= 0, "Should handle empty data gracefully"
 
-    def test_benchmark_with_minimal_data(self, benchmark):
+    def test_benchmark_with_minimal_data(self, benchmark: Any) -> None:
         """Test benchmarking with minimal data."""
         minimal_data = {"text": "Hello", "language": "en", "duration": 1.0}
 

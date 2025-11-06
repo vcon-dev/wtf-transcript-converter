@@ -32,13 +32,13 @@ def _get_converter(provider: str) -> Optional[Any]:
     provider = provider.lower()
 
     if provider == "whisper":
-        return WhisperConverter()  # type: ignore[no-untyped-call]
+        return WhisperConverter()
     elif provider == "deepgram":
-        return DeepgramConverter()  # type: ignore[no-untyped-call]
+        return DeepgramConverter()
     elif provider == "assemblyai":
-        return AssemblyAIConverter()  # type: ignore[no-untyped-call]
+        return AssemblyAIConverter()
     elif provider == "rev-ai":
-        return RevAIConverter()  # type: ignore[no-untyped-call]
+        return RevAIConverter()
     elif provider == "canary":
         return CanaryConverter()
     elif provider == "parakeet":
