@@ -2,7 +2,6 @@
 Tests for Whisper provider converter.
 """
 
-import json
 from pathlib import Path
 
 import pytest
@@ -291,7 +290,7 @@ class TestWhisperConverter:
             "segments": [],
         }
 
-        with pytest.raises(Exception):  # Should raise validation error
+        with pytest.raises(ValueError):
             self.converter.convert_to_wtf(invalid_data)
 
     def test_generic_convert_method(self, sample_whisper_data):

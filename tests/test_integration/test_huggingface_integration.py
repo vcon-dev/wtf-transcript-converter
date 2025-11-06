@@ -83,7 +83,7 @@ class TestHuggingFaceIntegration:
         try:
             canary_converter._load_model()
             assert canary_converter._pipeline is not None
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Canary model loading failed: {e}")
 
     def test_parakeet_model_loading(self, parakeet_converter):
@@ -92,7 +92,7 @@ class TestHuggingFaceIntegration:
         try:
             parakeet_converter._load_model()
             assert parakeet_converter._pipeline is not None
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Parakeet model loading failed: {e}")
 
     def test_canary_transcription(self, canary_converter, sample_audio_file):
@@ -113,7 +113,7 @@ class TestHuggingFaceIntegration:
             assert result["language"] == "en"
             assert result["duration"] > 0
 
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Canary transcription failed: {e}")
 
     def test_parakeet_transcription(self, parakeet_converter, sample_audio_file):
@@ -134,7 +134,7 @@ class TestHuggingFaceIntegration:
             assert result["language"] == "en"
             assert result["duration"] > 0
 
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Parakeet transcription failed: {e}")
 
     def test_canary_full_pipeline(self, canary_converter, sample_audio_file):
@@ -162,7 +162,7 @@ class TestHuggingFaceIntegration:
             assert canary_back["duration"] == canary_result["duration"]
             assert canary_back["model"] == canary_result["model"]
 
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Canary full pipeline failed: {e}")
 
     def test_parakeet_full_pipeline(self, parakeet_converter, sample_audio_file):
@@ -190,7 +190,7 @@ class TestHuggingFaceIntegration:
             assert parakeet_back["duration"] == parakeet_result["duration"]
             assert parakeet_back["model"] == parakeet_result["model"]
 
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Parakeet full pipeline failed: {e}")
 
     def test_model_comparison(self, canary_converter, parakeet_converter, sample_audio_file):
@@ -214,7 +214,7 @@ class TestHuggingFaceIntegration:
             assert canary_wtf.metadata.provider == "canary"
             assert parakeet_wtf.metadata.provider == "parakeet"
 
-        except Exception as e:
+        except (ImportError, RuntimeError, ValueError, OSError) as e:
             pytest.skip(f"Model comparison failed: {e}")
 
 

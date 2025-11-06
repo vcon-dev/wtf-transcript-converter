@@ -1,9 +1,5 @@
 """Tests for the cross-provider CLI module."""
 
-import json
-from unittest.mock import MagicMock, patch
-
-import pytest
 from click.testing import CliRunner
 
 from wtf_transcript_converter.cli.cross_provider import (

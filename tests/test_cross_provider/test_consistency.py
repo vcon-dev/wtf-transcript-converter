@@ -5,12 +5,8 @@ This module tests the same audio content across multiple providers to ensure
 WTF format consistency and validate standardization.
 """
 
-import json
-import os
-import tempfile
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 import pytest
 
@@ -95,7 +91,7 @@ class CrossProviderConsistencyTester:
                 )
                 results.append(result)
 
-            except Exception as e:
+            except (ValueError, AttributeError, KeyError, TypeError) as e:
                 # Create error result
                 result = ConsistencyResult(
                     provider=provider_name,

@@ -8,13 +8,11 @@ conversion speed, memory usage, and other performance metrics.
 import os
 import time
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 import psutil
 import pytest
 
-from wtf_transcript_converter.core.models import WTFDocument
 from wtf_transcript_converter.providers import (
     AssemblyAIConverter,
     CanaryConverter,
@@ -112,7 +110,7 @@ class PerformanceBenchmark:
                 cpu_usages.append(cpu_usage)
                 wtf_doc_sizes.append(wtf_doc_size)
 
-            except Exception as e:
+            except (ValueError, AttributeError, KeyError, TypeError) as e:
                 return PerformanceMetrics(
                     provider=provider_name,
                     conversion_time=0.0,

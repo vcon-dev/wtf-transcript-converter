@@ -5,14 +5,10 @@ These tests make actual API calls to transcription providers when API keys are p
 They require real audio files and API keys to run.
 """
 
-import json
 import os
-import tempfile
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import pytest
-import requests
 
 from wtf_transcript_converter.core.validator import validate_wtf_document
 from wtf_transcript_converter.providers.assemblyai import AssemblyAIConverter
@@ -117,7 +113,14 @@ class TestRealWhisperAPI:
                 f"✅ Whisper API test successful. Transcribed: '{wtf_doc.transcript.text[:50]}...'"
             )
 
-        except Exception as e:
+        except (
+            ValueError,
+            AttributeError,
+            KeyError,
+            TypeError,
+            ConnectionError,
+            TimeoutError,
+        ) as e:
             pytest.fail(f"Whisper API call failed: {e}")
 
 
@@ -145,8 +148,6 @@ class TestRealDeepgramAPI:
     @pytest.mark.skipif(not os.getenv("DEEPGRAM_API_KEY"), reason="DEEPGRAM_API_KEY not provided")
     def test_real_deepgram_api_call(self, deepgram_converter, sample_audio_file):
         """Test Deepgram with real API call."""
-        import asyncio
-
         from deepgram import DeepgramClient, FileSource, PrerecordedOptions
 
         # Set up Deepgram client
@@ -255,7 +256,14 @@ class TestRealDeepgramAPI:
                 f"✅ Deepgram API test successful. Transcribed: '{wtf_doc.transcript.text[:50]}...'"
             )
 
-        except Exception as e:
+        except (
+            ValueError,
+            AttributeError,
+            KeyError,
+            TypeError,
+            ConnectionError,
+            TimeoutError,
+        ) as e:
             pytest.fail(f"Deepgram API call failed: {e}")
 
 
@@ -367,7 +375,14 @@ class TestRealAssemblyAIAPI:
                 f"✅ AssemblyAI API test successful. Transcribed: '{wtf_doc.transcript.text[:50]}...'"
             )
 
-        except Exception as e:
+        except (
+            ValueError,
+            AttributeError,
+            KeyError,
+            TypeError,
+            ConnectionError,
+            TimeoutError,
+        ) as e:
             pytest.fail(f"AssemblyAI API call failed: {e}")
 
 

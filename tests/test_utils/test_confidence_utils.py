@@ -1,7 +1,5 @@
 """Tests for confidence utilities."""
 
-import pytest
-
 from wtf_transcript_converter.utils.confidence_utils import (
     calculate_quality_metrics,
     normalize_confidence,

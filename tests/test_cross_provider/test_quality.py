@@ -7,7 +7,7 @@ to assess accuracy, completeness, and other quality metrics.
 
 import re
 from dataclasses import dataclass
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any, Dict, List
 
 import pytest
 
@@ -128,7 +128,7 @@ class QualityComparator:
                 success=True,
             )
 
-        except Exception as e:
+        except (ValueError, AttributeError, KeyError, TypeError) as e:
             return QualityMetrics(
                 provider=provider_name,
                 overall_confidence=0.0,

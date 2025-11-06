@@ -2,8 +2,6 @@
 Basic tests to verify the project setup works correctly.
 """
 
-import pytest
-
 from wtf_transcript_converter.core.models import (
     WTFAudio,
     WTFDocument,

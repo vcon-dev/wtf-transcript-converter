@@ -5,11 +5,8 @@ These tests will use actual API calls to transcription providers when API keys a
 They are marked as integration tests and can be skipped if no API keys are available.
 """
 
-import json
 import os
-import tempfile
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import pytest
 

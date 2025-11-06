@@ -1,7 +1,5 @@
 """Tests for custom exceptions."""
 
-import pytest
-
 from wtf_transcript_converter.exceptions import (
     AudioProcessingError,
     ConfigurationError,

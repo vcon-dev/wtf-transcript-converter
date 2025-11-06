@@ -2,7 +2,6 @@
 Tests for AssemblyAI provider converter.
 """
 
-import json
 from pathlib import Path
 
 import pytest
@@ -361,7 +360,7 @@ class TestAssemblyAIConverter:
         }
 
         # Should raise validation error during conversion
-        with pytest.raises(Exception):  # Should raise validation error
+        with pytest.raises(ValueError):
             self.converter.convert_to_wtf(invalid_data)
 
     def test_generic_convert_method(self, sample_assemblyai_data):

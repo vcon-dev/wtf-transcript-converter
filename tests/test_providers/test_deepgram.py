@@ -2,7 +2,6 @@
 Tests for Deepgram provider converter.
 """
 
-import json
 from pathlib import Path
 
 import pytest

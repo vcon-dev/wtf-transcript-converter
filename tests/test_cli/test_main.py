@@ -1,8 +1,6 @@
 """Tests for the main CLI module."""
 
 from unittest.mock import MagicMock, patch
-
-import pytest
 from click.testing import CliRunner
 
 from wtf_transcript_converter.cli.main import from_wtf, main, providers, to_wtf, validate
