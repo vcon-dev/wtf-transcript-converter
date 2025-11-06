@@ -40,6 +40,10 @@ jobs:
         
     - name: Run linting
       run: |
+        pip install black
+        pip install isort
+        pip install flake8
+        pip install mypy
         uv run black --check src tests
         uv run isort --check-only src tests
         uv run flake8 src tests
