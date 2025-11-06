@@ -56,7 +56,7 @@ Convert a transcription:
 .. code-block:: python
 
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    converter = WhisperConverter()
    wtf_doc = converter.convert_to_wtf(whisper_data)
    print(wtf_doc.transcript.text)

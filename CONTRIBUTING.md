@@ -119,19 +119,19 @@ To add support for a new transcription provider:
    ```python
    from wtf_transcript_converter.providers.base import BaseProviderConverter
    from wtf_transcript_converter.core.models import WTFDocument
-   
+
    class NewProviderConverter(BaseProviderConverter):
        provider_name: str = "new_provider"
        description: str = "New Provider Description"
        status: str = "Implemented"
-       
+
        def __init__(self, provider_name: str = "new_provider"):
            super().__init__(provider_name)
-       
+
        def convert_to_wtf(self, data: Dict[str, Any]) -> WTFDocument:
            # Implementation here
            pass
-       
+
        def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
            # Implementation here
            pass
@@ -141,7 +141,7 @@ To add support for a new transcription provider:
    ```python
    # Update src/wtf_transcript_converter/providers/__init__.py
    from .new_provider import NewProviderConverter
-   
+
    __all__ = [
        # ... existing providers
        "NewProviderConverter",
@@ -152,7 +152,7 @@ To add support for a new transcription provider:
    ```python
    # Update src/wtf_transcript_converter/cli/main.py
    from ..providers.new_provider import NewProviderConverter
-   
+
    def _get_converter(provider: str):
        # ... existing providers
        elif provider == "new-provider":
@@ -223,7 +223,7 @@ class TestWhisperConverter:
     def test_convert_to_wtf(self, sample_whisper_data):
         converter = WhisperConverter()
         wtf_doc = converter.convert_to_wtf(sample_whisper_data)
-        
+
         assert wtf_doc.transcript.text == "expected text"
         assert wtf_doc.transcript.language == "en"
         assert len(wtf_doc.segments) > 0

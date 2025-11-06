@@ -8,7 +8,7 @@
 - Comprehensive validation framework
 - Base converter architecture
 
-#### Phase 2: Core Library Implementation ✅  
+#### Phase 2: Core Library Implementation ✅
 - Whisper provider converter (bidirectional)
 - Deepgram provider converter (bidirectional)
 - AssemblyAI provider converter (bidirectional)
@@ -25,7 +25,7 @@
 
 #### Real API Integration ✅
 - **AssemblyAI**: Successfully tested with real API key
-- **Whisper (OpenAI)**: Successfully tested with real API key  
+- **Whisper (OpenAI)**: Successfully tested with real API key
 - **Deepgram**: Successfully tested with real API key
 - All providers successfully transcribe audio and convert to WTF format
 - Round-trip conversion working for all providers

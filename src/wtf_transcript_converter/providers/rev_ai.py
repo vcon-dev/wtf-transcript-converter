@@ -28,6 +28,7 @@ class RevAIConverter(BaseProviderConverter):
 
     def __init__(self):
         super().__init__("rev_ai")
+
     provider_name: str = "rev_ai"
     description: str = "Rev.ai transcription service"
     status: str = "Implemented"

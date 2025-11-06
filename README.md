@@ -109,7 +109,7 @@ canary_converter = CanaryConverter()
 canary_result = canary_converter.transcribe_audio("audio.wav", language="en")
 wtf_doc = canary_converter.convert_to_wtf(canary_result)
 
-# Parakeet converter  
+# Parakeet converter
 parakeet_converter = ParakeetConverter()
 parakeet_result = parakeet_converter.transcribe_audio("audio.wav", language="en")
 wtf_doc = parakeet_converter.convert_to_wtf(parakeet_result)
@@ -167,7 +167,7 @@ vcon-wtf cross-provider all input.json --output-dir reports/
 
 # This generates:
 # - reports/consistency_report.json
-# - reports/performance_report.json  
+# - reports/performance_report.json
 # - reports/quality_report.json
 ```
 

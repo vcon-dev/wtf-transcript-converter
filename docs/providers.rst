@@ -65,10 +65,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    converter = WhisperConverter()
    wtf_doc = converter.convert_to_wtf(whisper_data)
-   
+
    # Access Whisper-specific features
    print(f"Log probability: {wtf_doc.segments[0].confidence}")
    print(f"Word probabilities: {[word.confidence for word in wtf_doc.words]}")
@@ -129,10 +129,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import DeepgramConverter
-   
+
    converter = DeepgramConverter()
    wtf_doc = converter.convert_to_wtf(deepgram_data)
-   
+
    # Access Deepgram-specific features
    print(f"Speaker count: {len(wtf_doc.speakers)}")
    print(f"Channel count: {len(deepgram_data['results']['channels'])}")
@@ -189,10 +189,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import AssemblyAIConverter
-   
+
    converter = AssemblyAIConverter()
    wtf_doc = converter.convert_to_wtf(assemblyai_data)
-   
+
    # Access AssemblyAI-specific features
    print(f"Utterance count: {len(assemblyai_data['utterances'])}")
    print(f"Language code: {assemblyai_data['language_code']}")
@@ -242,10 +242,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import RevAIConverter
-   
+
    converter = RevAIConverter()
    wtf_doc = converter.convert_to_wtf(rev_ai_data)
-   
+
    # Access Rev.ai-specific features
    print(f"Monologue count: {len(rev_ai_data['monologues'])}")
    print(f"Duration: {rev_ai_data['duration_seconds']}s")
@@ -299,10 +299,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import CanaryConverter
-   
+
    converter = CanaryConverter()
    wtf_doc = converter.convert_to_wtf(canary_data)
-   
+
    # Access Canary-specific features
    print(f"Model: {wtf_doc.metadata.model}")
    print(f"Provider: {wtf_doc.metadata.provider}")
@@ -356,10 +356,10 @@ Usage
 .. code-block:: python
 
    from wtf_transcript_converter.providers import ParakeetConverter
-   
+
    converter = ParakeetConverter()
    wtf_doc = converter.convert_to_wtf(parakeet_data)
-   
+
    # Access Parakeet-specific features
    print(f"Model: {wtf_doc.metadata.model}")
    print(f"Provider: {wtf_doc.metadata.provider}")

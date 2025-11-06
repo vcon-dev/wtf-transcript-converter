@@ -177,7 +177,7 @@ Upgrading from 0.0.1 to 0.1.0
 
    # Old
    from wtf_transcript_converter.models import WTFDocument
-   
+
    # New
    from wtf_transcript_converter.core.models import WTFDocument
 
@@ -187,7 +187,7 @@ Upgrading from 0.0.1 to 0.1.0
 
    # Old
    vcon-wtf convert input.json --provider whisper
-   
+
    # New
    vcon-wtf to-wtf input.json --provider whisper
 
@@ -197,7 +197,7 @@ Upgrading from 0.0.1 to 0.1.0
 
    # Old
    from wtf_transcript_converter.validator import validate
-   
+
    # New
    from wtf_transcript_converter.core.validator import validate_wtf_document
 

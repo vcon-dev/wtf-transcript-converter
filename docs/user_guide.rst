@@ -75,7 +75,7 @@ Creating WTF Documents
 .. code-block:: python
 
    from wtf_transcript_converter.core.models import WTFDocument, WTFTranscript, WTFSegment, WTFWord
-   
+
    # Create a WTF document manually
    transcript = WTFTranscript(
        text="Hello, world!",
@@ -83,21 +83,21 @@ Creating WTF Documents
        duration=2.0,
        confidence=0.95
    )
-   
+
    segment = WTFSegment(
        start=0.0,
        end=2.0,
        text="Hello, world!",
        confidence=0.95
    )
-   
+
    word = WTFWord(
        word="Hello,",
        start=0.0,
        end=0.5,
        confidence=0.99
    )
-   
+
    wtf_doc = WTFDocument(
        transcript=transcript,
        segments=[segment],
@@ -113,7 +113,7 @@ Provider to WTF
 .. code-block:: python
 
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    converter = WhisperConverter()
    wtf_doc = converter.convert_to_wtf(whisper_data)
 
@@ -123,7 +123,7 @@ WTF to Provider
 .. code-block:: python
 
    from wtf_transcript_converter.providers import DeepgramConverter
-   
+
    converter = DeepgramConverter()
    deepgram_data = converter.convert_from_wtf(wtf_doc)
 
@@ -133,11 +133,11 @@ Cross-Provider Conversion
 .. code-block:: python
 
    from wtf_transcript_converter.providers import WhisperConverter, DeepgramConverter
-   
+
    # Convert Whisper to WTF
    whisper_converter = WhisperConverter()
    wtf_doc = whisper_converter.convert_to_wtf(whisper_data)
-   
+
    # Convert WTF to Deepgram
    deepgram_converter = DeepgramConverter()
    deepgram_data = deepgram_converter.convert_from_wtf(wtf_doc)
@@ -151,9 +151,9 @@ Basic Validation
 .. code-block:: python
 
    from wtf_transcript_converter.core.validator import validate_wtf_document
-   
+
    is_valid, errors = validate_wtf_document(wtf_doc)
-   
+
    if not is_valid:
        print("Validation errors:")
        for error in errors:
@@ -165,15 +165,15 @@ Advanced Validation
 .. code-block:: python
 
    from wtf_transcript_converter.core.validator import WTFValidator
-   
+
    validator = WTFValidator()
-   
+
    # Add custom validation rules
    def confidence_check(doc):
        return doc.transcript.confidence > 0.5
-   
+
    validator.add_custom_rule("confidence_check", confidence_check)
-   
+
    is_valid, errors = validator.validate(wtf_doc)
 
 Error Handling
@@ -186,9 +186,9 @@ Conversion Errors
 
    from wtf_transcript_converter.providers import WhisperConverter
    from wtf_transcript_converter.exceptions import ConversionError
-   
+
    converter = WhisperConverter()
-   
+
    try:
        wtf_doc = converter.convert_to_wtf(invalid_data)
    except ConversionError as e:
@@ -203,7 +203,7 @@ Validation Errors
 
    from wtf_transcript_converter.core.validator import validate_wtf_document
    from wtf_transcript_converter.exceptions import ValidationError
-   
+
    try:
        is_valid, errors = validate_wtf_document(invalid_doc)
        if not is_valid:
@@ -273,17 +273,17 @@ Batch Processing
    import json
    from pathlib import Path
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    converter = WhisperConverter()
    input_dir = Path("input_files")
    output_dir = Path("output_files")
-   
+
    for input_file in input_dir.glob("*.json"):
        with open(input_file, 'r') as f:
            data = json.load(f)
-       
+
        wtf_doc = converter.convert_to_wtf(data)
-       
+
        output_file = output_dir / f"{input_file.stem}.wtf.json"
        with open(output_file, 'w') as f:
            f.write(wtf_doc.model_dump_json(indent=2))
@@ -294,20 +294,20 @@ Custom Validation Rules
 .. code-block:: python
 
    from wtf_transcript_converter.core.validator import WTFValidator
-   
+
    validator = WTFValidator()
-   
+
    # Add custom rules
    validator.add_custom_rule(
        "min_confidence",
        lambda doc: doc.transcript.confidence >= 0.8
    )
-   
+
    validator.add_custom_rule(
        "max_duration",
        lambda doc: doc.transcript.duration <= 3600  # 1 hour
    )
-   
+
    is_valid, errors = validator.validate(wtf_doc)
 
 Provider-Specific Features
@@ -319,14 +319,14 @@ Whisper Features
 .. code-block:: python
 
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    converter = WhisperConverter()
    wtf_doc = converter.convert_to_wtf(whisper_data)
-   
+
    # Access Whisper-specific features
    for segment in wtf_doc.segments:
        print(f"Log probability: {segment.confidence}")
-   
+
    for word in wtf_doc.words:
        print(f"Word probability: {word.confidence}")
 
@@ -336,10 +336,10 @@ Deepgram Features
 .. code-block:: python
 
    from wtf_transcript_converter.providers import DeepgramConverter
-   
+
    converter = DeepgramConverter()
    wtf_doc = converter.convert_to_wtf(deepgram_data)
-   
+
    # Access Deepgram-specific features
    print(f"Speaker count: {len(wtf_doc.speakers)}")
    print(f"Channel count: {len(deepgram_data['results']['channels'])}")
@@ -350,10 +350,10 @@ AssemblyAI Features
 .. code-block:: python
 
    from wtf_transcript_converter.providers import AssemblyAIConverter
-   
+
    converter = AssemblyAIConverter()
    wtf_doc = converter.convert_to_wtf(assemblyai_data)
-   
+
    # Access AssemblyAI-specific features
    print(f"Utterance count: {len(assemblyai_data['utterances'])}")
    print(f"Language code: {assemblyai_data['language_code']}")
@@ -373,22 +373,22 @@ Performance Optimization
 
    import asyncio
    from wtf_transcript_converter.providers import WhisperConverter
-   
+
    async def process_files_async(files):
        converter = WhisperConverter()
        tasks = []
-       
+
        for file in files:
            task = asyncio.create_task(process_file_async(converter, file))
            tasks.append(task)
-       
+
        results = await asyncio.gather(*tasks)
        return results
-   
+
    async def process_file_async(converter, file):
        with open(file, 'r') as f:
            data = json.load(f)
-       
+
        wtf_doc = converter.convert_to_wtf(data)
        return wtf_doc
 
@@ -405,26 +405,26 @@ Error Handling
    import logging
    from wtf_transcript_converter.providers import WhisperConverter
    from wtf_transcript_converter.exceptions import ConversionError
-   
+
    logging.basicConfig(level=logging.INFO)
    logger = logging.getLogger(__name__)
-   
+
    def safe_convert(converter, data):
        try:
            # Validate input
            if not data or 'text' not in data:
                raise ValueError("Invalid input data")
-           
+
            # Convert
            wtf_doc = converter.convert_to_wtf(data)
-           
+
            # Validate output
            is_valid, errors = validate_wtf_document(wtf_doc)
            if not is_valid:
                raise ValidationError(f"Output validation failed: {errors}")
-           
+
            return wtf_doc
-           
+
        except ConversionError as e:
            logger.error(f"Conversion failed: {e}")
            raise
@@ -450,7 +450,7 @@ Data Quality
            'duration': wtf_doc.transcript.duration,
            'word_count': len(wtf_doc.words)
        }
-       
+
        return metrics
 
 Troubleshooting
@@ -468,7 +468,7 @@ If you encounter import errors:
 
    # Check Python version
    python --version  # Should be 3.10 or higher
-   
+
    # Reinstall package
    pip uninstall vcon-wtf
    pip install vcon-wtf
@@ -482,7 +482,7 @@ If validation fails:
 
    # Check WTF document structure
    print(wtf_doc.model_dump_json(indent=2))
-   
+
    # Validate step by step
    is_valid, errors = validate_wtf_document(wtf_doc)
    for error in errors:
@@ -497,7 +497,7 @@ If conversion fails:
 
    # Check input data format
    print(json.dumps(input_data, indent=2))
-   
+
    # Try with minimal data
    minimal_data = {"text": "test", "language": "en", "duration": 1.0}
    wtf_doc = converter.convert_to_wtf(minimal_data)
@@ -511,10 +511,10 @@ If CLI commands fail:
 
    # Check installation
    pip show vcon-wtf
-   
+
    # Test with verbose output
    vcon-wtf --help
-   
+
    # Check file permissions
    ls -la input.json
 

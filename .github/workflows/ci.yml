@@ -19,25 +19,25 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.12", "3.11", "3.10"]
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install dependencies
       run: |
         uv sync --dev
-        
+
     - name: Run linting
       run: |
         pip install black
@@ -48,11 +48,11 @@ jobs:
         uv run isort --check-only src tests
         uv run flake8 src tests
         uv run mypy src
-        
+
     - name: Run tests
       run: |
         uv run pytest tests/ --cov=src/wtf_transcript_converter --cov-report=xml --cov-report=html
-        
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
@@ -65,29 +65,29 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install dependencies with integration extras
       run: |
         uv sync --group dev --group integration
-        
+
     - name: Run integration tests (mock only)
       run: |
         uv run pytest tests/test_integration/ -v --tb=short
-        
+
     - name: Run cross-provider tests
       run: |
         uv run pytest tests/test_cross_provider/ -v --tb=short
@@ -95,29 +95,29 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install dependencies
       run: |
         uv sync --dev
-        
+
     - name: Run security scan
       run: |
         uv run bandit -r src/ -f json -o bandit-report.json || true
-        
+
     - name: Upload security report
       uses: actions/upload-artifact@v4
       with:
@@ -128,29 +128,29 @@ jobs:
     name: Build Package
     runs-on: ubuntu-latest
     needs: [test, integration-tests, security]
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install build dependencies
       run: |
         uv sync --dev
-        
+
     - name: Build package
       run: |
         uv build
-        
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -162,29 +162,29 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.event_name == 'release' && github.event.action == 'published'
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install build dependencies
       run: |
         uv sync --dev
-        
+
     - name: Build package
       run: |
         uv build
-        
+
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
@@ -195,30 +195,30 @@ jobs:
     name: Build Documentation
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: ${{ env.UV_VERSION }}
-        
+
     - name: Install dependencies
       run: |
         uv sync --dev
-        
+
     - name: Build documentation
       run: |
         # This will be implemented when we add Sphinx documentation
         echo "Documentation build will be implemented in future phase"
-        
+
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3

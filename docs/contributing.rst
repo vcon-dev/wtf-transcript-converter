@@ -39,7 +39,7 @@ Quick Setup
 
    # Install development dependencies
    make setup-dev
-   
+
    # Or manually:
    uv sync --dev
    uv run pre-commit install
@@ -51,7 +51,7 @@ Verify Installation
 
    # Run tests to verify everything works
    make test
-   
+
    # Run cross-provider tests
    make cross-provider-all
 
@@ -128,19 +128,19 @@ To add support for a new transcription provider:
 
    from wtf_transcript_converter.providers.base import BaseProviderConverter
    from wtf_transcript_converter.core.models import WTFDocument
-   
+
    class NewProviderConverter(BaseProviderConverter):
        provider_name: str = "new_provider"
        description: str = "New Provider Description"
        status: str = "Implemented"
-       
+
        def __init__(self, provider_name: str = "new_provider"):
            super().__init__(provider_name)
-       
+
        def convert_to_wtf(self, data: Dict[str, Any]) -> WTFDocument:
            # Implementation here
            pass
-       
+
        def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
            # Implementation here
            pass
@@ -151,7 +151,7 @@ To add support for a new transcription provider:
 
    # Update src/wtf_transcript_converter/providers/__init__.py
    from .new_provider import NewProviderConverter
-   
+
    __all__ = [
        # ... existing providers
        "NewProviderConverter",
@@ -163,7 +163,7 @@ To add support for a new transcription provider:
 
    # Update src/wtf_transcript_converter/cli/main.py
    from ..providers.new_provider import NewProviderConverter
-   
+
    def _get_converter(provider: str):
        # ... existing providers
        elif provider == "new-provider":
@@ -216,15 +216,15 @@ Running Tests
 
    # Run all tests
    make test-all
-   
+
    # Run specific test categories
    make test                    # Unit tests
    make test-integration        # Integration tests
    make test-cross-provider     # Cross-provider tests
-   
+
    # Run with coverage
    make test-cov
-   
+
    # Run specific test file
    uv run pytest tests/test_providers/test_whisper.py -v
 
@@ -235,12 +235,12 @@ Writing Tests
 
    import pytest
    from wtf_transcript_converter.providers.whisper import WhisperConverter
-   
+
    class TestWhisperConverter:
        def test_convert_to_wtf(self, sample_whisper_data):
            converter = WhisperConverter()
            wtf_doc = converter.convert_to_wtf(sample_whisper_data)
-           
+
            assert wtf_doc.transcript.text == "expected text"
            assert wtf_doc.transcript.language == "en"
            assert len(wtf_doc.segments) > 0
@@ -266,7 +266,7 @@ Running Style Checks
 
    # Run all style checks
    make check
-   
+
    # Individual checks
    make lint          # flake8, black, isort
    make type-check    # mypy
@@ -281,7 +281,7 @@ Pre-commit hooks run automatically on commit:
 
    # Install hooks
    make pre-commit-install
-   
+
    # Run manually
    make pre-commit
 
@@ -381,7 +381,7 @@ Building Documentation
 
    # Build documentation
    make docs
-   
+
    # Or manually
    cd docs
    make html

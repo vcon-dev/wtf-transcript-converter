@@ -69,10 +69,10 @@ If you're using uv for Python package management:
    # Clone the repository
    git clone https://github.com/vcon-dev/wtf-transcript-converter.git
    cd wtf-transcript-converter
-   
+
    # Install in development mode
    uv sync --dev
-   
+
    # For integration testing
    uv sync --dev --group integration
 

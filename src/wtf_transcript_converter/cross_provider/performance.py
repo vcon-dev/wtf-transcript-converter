@@ -12,6 +12,7 @@ from typing import Any, Dict, List
 
 import psutil
 import pytest
+
 from wtf_transcript_converter.providers import (
     AssemblyAIConverter,
     CanaryConverter,

@@ -188,11 +188,11 @@ code {
         width: 100%;
         position: relative;
     }
-    
+
     .wy-nav-content-wrap {
         margin-left: 0;
     }
-    
+
     .wy-nav-content {
         margin: 0;
         padding: 1rem;
@@ -206,12 +206,12 @@ code {
     .rst-footer-buttons {
         display: none;
     }
-    
+
     .wy-nav-content {
         margin: 0;
         padding: 0;
     }
-    
+
     .rst-content {
         max-width: none;
     }

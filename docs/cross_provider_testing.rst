@@ -42,16 +42,16 @@ Python API:
 .. code-block:: python
 
    from wtf_transcript_converter.cross_provider.consistency import CrossProviderConsistencyTester
-   
+
    tester = CrossProviderConsistencyTester()
-   
+
    # Test consistency across all providers
    report = tester.generate_consistency_report(
        audio_file_path="test_audio.wav",
        providers_to_test=["whisper", "deepgram", "assemblyai"],
        api_keys={"whisper": "your_key", "deepgram": "your_key"}
    )
-   
+
    print(f"Consistency report: {report}")
 
 CLI:
@@ -60,7 +60,7 @@ CLI:
 
    # Test consistency
    vcon-wtf cross-provider consistency input.json --verbose
-   
+
    # Save report to file
    vcon-wtf cross-provider consistency input.json --output consistency_report.json
 
@@ -114,16 +114,16 @@ Python API:
 .. code-block:: python
 
    from wtf_transcript_converter.cross_provider.performance import PerformanceBenchmark
-   
+
    benchmark = PerformanceBenchmark()
-   
+
    # Benchmark all providers
    all_metrics = benchmark.benchmark_all_providers(sample_data, iterations=5)
-   
+
    # Analyze results
    analysis = benchmark.analyze_performance(all_metrics)
    report = benchmark.generate_performance_report(all_metrics, analysis)
-   
+
    print(report)
 
 CLI:
@@ -132,7 +132,7 @@ CLI:
 
    # Benchmark performance
    vcon-wtf cross-provider performance input.json --iterations 5
-   
+
    # Save report to file
    vcon-wtf cross-provider performance input.json --output performance_report.json
 
@@ -188,17 +188,17 @@ Python API:
 .. code-block:: python
 
    from wtf_transcript_converter.cross_provider.quality import QualityComparator
-   
+
    comparator = QualityComparator()
-   
+
    # Compare quality across providers
    wtf_docs = {}
    for provider in ["whisper", "deepgram", "assemblyai"]:
        wtf_docs[provider] = comparator.convert_to_wtf(provider, sample_data)
-   
+
    comparison_data = comparator.compare_qualities(wtf_docs)
    report = comparator.generate_quality_report(comparison_data)
-   
+
    print(report)
 
 CLI:
@@ -207,7 +207,7 @@ CLI:
 
    # Compare quality
    vcon-wtf cross-provider quality input.json --verbose
-   
+
    # Save report to file
    vcon-wtf cross-provider quality input.json --output quality_report.json
 
@@ -257,7 +257,7 @@ CLI:
 
    # Run all cross-provider tests
    vcon-wtf cross-provider all input.json --output-dir reports/
-   
+
    # With custom options
    wtf-convert cross-provider all input.json \
      --output-dir reports/ \
@@ -279,23 +279,23 @@ Python API:
        PerformanceBenchmark,
        QualityComparator
    )
-   
+
    # Run all tests
    tester = CrossProviderConsistencyTester()
    benchmark = PerformanceBenchmark()
    comparator = QualityComparator()
-   
+
    # Consistency test
    consistency_report = tester.generate_consistency_report(
-       "test_audio.wav", 
+       "test_audio.wav",
        ["whisper", "deepgram", "assemblyai"],
        {}
    )
-   
+
    # Performance test
    performance_metrics = benchmark.benchmark_all_providers(sample_data, 3)
    performance_analysis = benchmark.analyze_performance(performance_metrics)
-   
+
    # Quality test
    wtf_docs = {}
    for provider in ["whisper", "deepgram", "assemblyai"]:
@@ -323,7 +323,7 @@ Test Data Selection
        "multi_speaker.wav",    # Multiple speakers
        "technical_audio.wav"   # Technical terminology
    ]
-   
+
    for test_file in test_files:
        wtf-convert cross-provider all test_file --output-dir f"reports/{test_file}"
 
@@ -343,13 +343,13 @@ Interpreting Results
        for comparison, data in consistency_report["comparisons"].items():
            if data["transcript_text_match"] and data["duration_match"]:
                consistent_providers.append(comparison)
-       
+
        # Find fastest provider
        fastest = performance_report["analysis"]["fastest_converter"]
-       
+
        # Find highest quality provider
        best_quality = quality_report["comparison_results"]["best_overall_confidence_provider"]
-       
+
        return {
            "consistent": consistent_providers,
            "fastest": fastest,
@@ -365,11 +365,11 @@ Integrate cross-provider testing into your CI/CD pipeline:
 
    # .github/workflows/cross-provider-test.yml
    name: Cross-Provider Testing
-   
+
    on:
      schedule:
        - cron: '0 2 * * *'  # Daily at 2 AM
-   
+
    jobs:
      cross-provider-test:
        runs-on: ubuntu-latest

@@ -76,7 +76,7 @@ ASSEMBLYAI_API_KEY="your-key" uv run pytest tests/test_real_api_integration.py::
 These tests use mock responses that simulate real API responses. They test the conversion logic without making actual API calls.
 
 - **TestWhisperIntegration**: Tests Whisper converter with mock data
-- **TestDeepgramIntegration**: Tests Deepgram converter with mock data  
+- **TestDeepgramIntegration**: Tests Deepgram converter with mock data
 - **TestAssemblyAIIntegration**: Tests AssemblyAI converter with mock data
 - **TestCrossProviderIntegration**: Tests consistency across providers
 
@@ -119,7 +119,7 @@ Example output:
 **Warning**: These tests make real API calls and may incur costs:
 
 - **Whisper**: $0.006 per minute of audio
-- **Deepgram**: $0.0043 per minute of audio  
+- **Deepgram**: $0.0043 per minute of audio
 - **AssemblyAI**: $0.00065 per minute of audio
 
 The test audio file is only 3 seconds long, so costs are minimal, but be aware when running tests frequently.

@@ -233,7 +233,7 @@ from datetime import datetime
 class WTFTranscript(BaseModel):
     """
     Core transcript information following WTF specification.
-    
+
     This model represents the high-level summary of the entire transcription
     with required fields: text, language, duration, and confidence.
     """
@@ -241,12 +241,12 @@ class WTFTranscript(BaseModel):
     language: str = Field(..., description="BCP-47 language code (e.g., 'en-US')")
     duration: float = Field(..., ge=0, description="Total audio duration in seconds")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Overall confidence score [0.0-1.0]")
-    
+
     @validator('language')
     def validate_language_code(cls, v):
         # BCP-47 validation logic
         return v
-    
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -287,13 +287,13 @@ from vcon import Vcon, Attachment
 class VConWTFAttachment(BaseModel):
     """
     Wrapper for WTF transcription as vCon attachment.
-    
+
     This model integrates WTF transcriptions with vcon-lib
     for seamless vCon container operations.
     """
     attachment: Attachment = Field(..., description="vCon attachment object")
     wtf_data: WTFDocument = Field(..., description="WTF transcription data")
-    
+
     @classmethod
     def create_from_wtf(cls, wtf_doc: WTFDocument, dialog_index: int = 0) -> 'VConWTFAttachment':
         """Create vCon attachment from WTF document."""
@@ -303,7 +303,7 @@ class VConWTFAttachment(BaseModel):
             body=wtf_doc.dict()
         )
         return cls(attachment=attachment, wtf_data=wtf_doc)
-    
+
     def add_to_vcon(self, vcon: Vcon) -> Vcon:
         """Add WTF attachment to vCon container."""
         vcon.add_attachment(self.attachment)
@@ -497,7 +497,7 @@ from wtf_transcript_converter.core.models import WTFTranscript, WTFDocument
 
 class TestWTFTranscript:
     """Test WTF transcript model validation and behavior."""
-    
+
     def test_valid_transcript_creation(self):
         """Test creating a valid WTF transcript."""
         transcript = WTFTranscript(
@@ -510,7 +510,7 @@ class TestWTFTranscript:
         assert transcript.language == "en-US"
         assert transcript.duration == 2.5
         assert transcript.confidence == 0.95
-    
+
     def test_invalid_confidence_score(self):
         """Test validation of confidence score bounds."""
         with pytest.raises(ValidationError) as exc_info:
@@ -521,7 +521,7 @@ class TestWTFTranscript:
                 confidence=1.5  # Invalid: > 1.0
             )
         assert "confidence" in str(exc_info.value)
-    
+
     @pytest.mark.parametrize("confidence", [0.0, 0.5, 1.0])
     def test_valid_confidence_scores(self, confidence):
         """Test valid confidence score values."""
@@ -540,7 +540,7 @@ from wtf_transcript_converter.core.models import VConWTFAttachment, WTFDocument
 
 class TestVConIntegration:
     """Test vcon-lib integration functionality."""
-    
+
     def test_create_vcon_attachment_from_wtf(self):
         """Test creating vCon attachment from WTF document."""
         wtf_doc = WTFDocument(
@@ -553,12 +553,12 @@ class TestVConIntegration:
             segments=[],
             metadata={}
         )
-        
+
         attachment = VConWTFAttachment.create_from_wtf(wtf_doc)
         assert attachment.attachment.type == "wtf_transcription"
         assert attachment.attachment.encoding == "json"
         assert attachment.wtf_data == wtf_doc
-    
+
     def test_add_wtf_to_vcon_container(self):
         """Test adding WTF attachment to vCon container."""
         vcon = Vcon()
@@ -572,10 +572,10 @@ class TestVConIntegration:
             segments=[],
             metadata={}
         )
-        
+
         attachment = VConWTFAttachment.create_from_wtf(wtf_doc)
         updated_vcon = attachment.add_to_vcon(vcon)
-        
+
         assert len(updated_vcon.attachments) == 1
         assert updated_vcon.attachments[0].type == "wtf_transcription"
 ```
@@ -927,7 +927,7 @@ uv sync --extra integration
 
 # Set API keys (optional - tests will skip if not provided)
 export OPENAI_API_KEY="your-whisper-key"
-export DEEPGRAM_API_KEY="your-deepgram-key"  
+export DEEPGRAM_API_KEY="your-deepgram-key"
 export ASSEMBLYAI_API_KEY="your-assemblyai-key"
 ```
 
@@ -968,7 +968,7 @@ Implement Canary and Parakeet provider converters using Hugging Face models for 
 
 #### ✅ **Canary Converter Implementation**
 - **Model**: `nvidia/canary-1b-v2` (NVIDIA NeMo Canary)
-- **Features**: 
+- **Features**:
   - Full bidirectional conversion (Canary ↔ WTF)
   - Hugging Face API integration with token support
   - Audio transcription capabilities
@@ -1105,7 +1105,7 @@ Implement comprehensive cross-provider testing framework to validate consistency
 ```
 ============================== 17 passed in 5.29s ==============================
 - Consistency Tests: 5/5 tests passing
-- Performance Tests: 6/6 tests passing  
+- Performance Tests: 6/6 tests passing
 - Quality Tests: 6/6 tests passing
 - Overall Cross-Provider Tests: 17/17 passing (100% success rate)
 ```
@@ -1330,4 +1330,3 @@ The library now supports 6 major transcription providers with comprehensive cros
 - Production deployment validation
 - Performance optimization and quality improvements
 - Documentation website deployment
-
