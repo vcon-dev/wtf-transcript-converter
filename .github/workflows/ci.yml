@@ -10,7 +10,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.12"
-  UV_VERSION: "0.4.0"
+  UV_VERSION: "0.7.0"
 
 jobs:
   test:
@@ -82,7 +82,7 @@ jobs:
         
     - name: Install dependencies with integration extras
       run: |
-        uv sync --dev --group integration
+        uv sync --group dev --group integration
         
     - name: Run integration tests (mock only)
       run: |
@@ -119,7 +119,7 @@ jobs:
         uv run bandit -r src/ -f json -o bandit-report.json || true
         
     - name: Upload security report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-report
         path: bandit-report.json
@@ -152,7 +152,7 @@ jobs:
         uv build
         
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/

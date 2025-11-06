@@ -13,11 +13,11 @@ from .core.converter import BaseConverter
 from .core.models import WTFDocument, WTFSegment, WTFTranscript, WTFWord
 from .core.validator import validate_wtf_document
 from .exceptions import (
-    ConversionError,
-    ValidationError,
-    ProviderError,
-    ConfigurationError,
     AudioProcessingError,
+    ConfigurationError,
+    ConversionError,
+    ProviderError,
+    ValidationError,
 )
 
 __all__ = [

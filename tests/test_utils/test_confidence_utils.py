@@ -3,8 +3,8 @@
 import pytest
 
 from wtf_transcript_converter.utils.confidence_utils import (
-    normalize_confidence,
     calculate_quality_metrics,
+    normalize_confidence,
 )
 
 

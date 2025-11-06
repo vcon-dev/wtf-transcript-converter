@@ -1,8 +1,9 @@
 """Integration tests for cross-provider performance testing."""
 
-import pytest
 import json
 from pathlib import Path
+
+import pytest
 
 from wtf_transcript_converter.cross_provider.performance import PerformanceBenchmark
 

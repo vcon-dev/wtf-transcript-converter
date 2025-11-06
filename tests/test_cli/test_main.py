@@ -1,10 +1,11 @@
 """Tests for the main CLI module."""
 
+from unittest.mock import MagicMock, patch
+
 import pytest
 from click.testing import CliRunner
-from unittest.mock import patch, MagicMock
 
-from wtf_transcript_converter.cli.main import main, providers, to_wtf, from_wtf, validate
+from wtf_transcript_converter.cli.main import from_wtf, main, providers, to_wtf, validate
 
 
 class TestMainCLI:

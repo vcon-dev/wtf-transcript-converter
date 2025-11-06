@@ -4,8 +4,8 @@ import pytest
 
 from wtf_transcript_converter.utils.time_utils import (
     convert_timestamp,
-    validate_timing,
     get_current_iso_timestamp,
+    validate_timing,
 )
 
 

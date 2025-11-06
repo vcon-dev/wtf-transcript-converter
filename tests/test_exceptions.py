@@ -3,11 +3,11 @@
 import pytest
 
 from wtf_transcript_converter.exceptions import (
-    ConversionError,
-    ValidationError,
-    ProviderError,
-    ConfigurationError,
     AudioProcessingError,
+    ConfigurationError,
+    ConversionError,
+    ProviderError,
+    ValidationError,
 )
 
 
