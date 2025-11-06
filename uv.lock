@@ -3136,20 +3136,6 @@ dev = [
     { name = "pytest-mock" },
     { name = "safety" },
 ]
-integration = [
-    { name = "assemblyai" },
-    { name = "datasets" },
-    { name = "deepgram-sdk" },
-    { name = "librosa" },
-    { name = "numpy" },
-    { name = "openai" },
-    { name = "psutil" },
-    { name = "requests" },
-    { name = "rev-ai" },
-    { name = "soundfile" },
-    { name = "torch" },
-    { name = "transformers" },
-]
 test = [
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -3172,28 +3158,32 @@ dev = [
     { name = "sphinx-rtd-theme" },
 ]
 integration = [
+    { name = "assemblyai" },
+    { name = "datasets" },
+    { name = "deepgram-sdk" },
+    { name = "librosa" },
+    { name = "numpy" },
+    { name = "openai" },
     { name = "psutil" },
+    { name = "requests" },
+    { name = "rev-ai" },
+    { name = "soundfile" },
+    { name = "torch" },
+    { name = "transformers" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "assemblyai", marker = "extra == 'integration'", specifier = ">=0.21.0" },
     { name = "bandit", marker = "extra == 'dev'", specifier = ">=1.7.0" },
     { name = "black", marker = "extra == 'dev'", specifier = ">=24.0.0" },
     { name = "click", specifier = ">=8.0.0" },
-    { name = "datasets", marker = "extra == 'integration'", specifier = ">=2.0.0" },
-    { name = "deepgram-sdk", marker = "extra == 'integration'", specifier = ">=3.0.0" },
     { name = "flake8", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "flake8-bugbear", marker = "extra == 'dev'", specifier = ">=23.0.0" },
     { name = "flake8-docstrings", marker = "extra == 'dev'", specifier = ">=1.7.0" },
     { name = "isort", marker = "extra == 'dev'", specifier = ">=5.12.0" },
     { name = "jsonschema", specifier = ">=4.0.0" },
-    { name = "librosa", marker = "extra == 'integration'", specifier = ">=0.10.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.0.0" },
-    { name = "numpy", marker = "extra == 'integration'", specifier = ">=1.24.0" },
-    { name = "openai", marker = "extra == 'integration'", specifier = ">=1.0.0" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=3.0.0" },
-    { name = "psutil", marker = "extra == 'integration'", specifier = ">=5.9.0" },
     { name = "pydantic", specifier = ">=2.0.0" },
     { name = "pytest", specifier = ">=8.4.2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0.0" },
@@ -3205,16 +3195,11 @@ requires-dist = [
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.10.0" },
     { name = "pytest-mock", marker = "extra == 'test'", specifier = ">=3.10.0" },
     { name = "python-dateutil", specifier = ">=2.8.0" },
-    { name = "requests", marker = "extra == 'integration'", specifier = ">=2.28.0" },
-    { name = "rev-ai", marker = "extra == 'integration'", specifier = ">=2.0.0" },
     { name = "rich", specifier = ">=13.0.0" },
     { name = "safety", marker = "extra == 'dev'", specifier = ">=2.3.0" },
-    { name = "soundfile", marker = "extra == 'integration'", specifier = ">=0.12.0" },
-    { name = "torch", marker = "extra == 'integration'", specifier = ">=2.0.0" },
-    { name = "transformers", marker = "extra == 'integration'", specifier = ">=4.30.0" },
     { name = "twine", specifier = ">=6.2.0" },
 ]
-provides-extras = ["dev", "test", "integration"]
+provides-extras = ["dev", "test"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -3231,7 +3216,20 @@ dev = [
     { name = "sphinx-autodoc-typehints", specifier = ">=3.2.0" },
     { name = "sphinx-rtd-theme", specifier = ">=3.0.2" },
 ]
-integration = [{ name = "psutil", specifier = ">=7.1.0" }]
+integration = [
+    { name = "assemblyai", specifier = ">=0.21.0" },
+    { name = "datasets", specifier = ">=2.0.0" },
+    { name = "deepgram-sdk", specifier = ">=3.0.0" },
+    { name = "librosa", specifier = ">=0.10.0" },
+    { name = "numpy", specifier = ">=1.24.0" },
+    { name = "openai", specifier = ">=1.0.0" },
+    { name = "psutil", specifier = ">=7.1.0" },
+    { name = "requests", specifier = ">=2.28.0" },
+    { name = "rev-ai", specifier = ">=2.0.0" },
+    { name = "soundfile", specifier = ">=0.12.0" },
+    { name = "torch", specifier = ">=2.0.0" },
+    { name = "transformers", specifier = ">=4.30.0" },
+]
 
 [[package]]
 name = "virtualenv"

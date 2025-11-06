@@ -6,10 +6,14 @@ These tests require HF_TOKEN environment variable and will make real API calls.
 
 import os
 import tempfile
-from pathlib import Path
 
-import numpy as np
 import pytest
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
+    pytest.skip("numpy is required for integration tests", allow_module_level=True)
 
 from wtf_transcript_converter.providers.canary import CanaryConverter
 from wtf_transcript_converter.providers.parakeet import ParakeetConverter
