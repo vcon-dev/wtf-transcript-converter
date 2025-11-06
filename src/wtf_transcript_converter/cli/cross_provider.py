@@ -7,6 +7,7 @@ across multiple transcription providers.
 
 import json
 from pathlib import Path
+from typing import Optional
 
 import click
 from rich.console import Console
@@ -18,7 +19,7 @@ console = Console()
 
 
 @click.group()
-def cross_provider():
+def cross_provider() -> None:
     """Cross-provider testing and comparison tools."""
     pass
 
@@ -32,7 +33,7 @@ def cross_provider():
     help="Output report file (default: cross_provider_report.json)",
 )
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output with detailed reports")
-def consistency(input_file: str, output: str, verbose: bool):
+def consistency(input_file: str, output: Optional[str], verbose: bool) -> None:
     """Test consistency across all providers using the same input data."""
     console.print(f"[blue]Testing consistency across providers with {input_file}...[/blue]")
 
@@ -44,7 +45,7 @@ def consistency(input_file: str, output: str, verbose: bool):
         # Import the consistency tester
         from ..cross_provider import CrossProviderConsistencyTester
 
-        tester = CrossProviderConsistencyTester()
+        tester = CrossProviderConsistencyTester()  # type: ignore[no-untyped-call]
 
         with Progress(
             SpinnerColumn(),
@@ -124,7 +125,7 @@ def consistency(input_file: str, output: str, verbose: bool):
 @click.option("--iterations", "-i", default=3, help="Number of benchmark iterations")
 @click.option("--output", "-o", type=click.Path(), help="Output report file")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output with detailed reports")
-def performance(input_file: str, iterations: int, output: str, verbose: bool):
+def performance(input_file: str, iterations: int, output: Optional[str], verbose: bool) -> None:
     """Benchmark performance across all providers."""
     console.print(f"[blue]Benchmarking performance across providers with {input_file}...[/blue]")
 
@@ -136,7 +137,7 @@ def performance(input_file: str, iterations: int, output: str, verbose: bool):
         # Import the performance benchmark
         from ..cross_provider import PerformanceBenchmark
 
-        benchmark = PerformanceBenchmark()
+        benchmark = PerformanceBenchmark()  # type: ignore[no-untyped-call]
 
         with Progress(
             SpinnerColumn(),
@@ -215,7 +216,7 @@ def performance(input_file: str, iterations: int, output: str, verbose: bool):
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("--output", "-o", type=click.Path(), help="Output report file")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output with detailed reports")
-def quality(input_file: str, output: str, verbose: bool):
+def quality(input_file: str, output: Optional[str], verbose: bool) -> None:
     """Compare quality across all providers."""
     console.print(f"[blue]Comparing quality across providers with {input_file}...[/blue]")
 
@@ -227,7 +228,7 @@ def quality(input_file: str, output: str, verbose: bool):
         # Import the quality comparator
         from ..cross_provider import QualityComparator
 
-        comparator = QualityComparator()
+        comparator = QualityComparator()  # type: ignore[no-untyped-call]
 
         with Progress(
             SpinnerColumn(),
@@ -311,20 +312,21 @@ def quality(input_file: str, output: str, verbose: bool):
 @click.option("--output-dir", "-o", type=click.Path(), help="Output directory for reports")
 @click.option("--iterations", "-i", default=3, help="Number of benchmark iterations")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def all(input_file: str, output_dir: str, iterations: int, verbose: bool):
+def all(input_file: str, output_dir: Optional[str], iterations: int, verbose: bool) -> None:
     """Run all cross-provider tests (consistency, performance, quality)."""
     console.print(
         f"[blue]Running comprehensive cross-provider analysis with {input_file}...[/blue]"
     )
 
     # Create output directory if specified
+    output_path: Optional[Path] = None
     if output_dir:
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
     # Run consistency test
     console.print("\n[cyan]1. Testing Consistency...[/cyan]")
-    consistency_output = str(output_path / "consistency_report.json") if output_dir else None
+    consistency_output = str(output_path / "consistency_report.json") if output_path else None
     try:
         consistency(input_file, consistency_output, verbose)
     except Exception as e:
@@ -332,7 +334,7 @@ def all(input_file: str, output_dir: str, iterations: int, verbose: bool):
 
     # Run performance test
     console.print("\n[cyan]2. Benchmarking Performance...[/cyan]")
-    performance_output = str(output_path / "performance_report.json") if output_dir else None
+    performance_output = str(output_path / "performance_report.json") if output_path else None
     try:
         performance(input_file, iterations, performance_output, verbose)
     except Exception as e:
@@ -340,7 +342,7 @@ def all(input_file: str, output_dir: str, iterations: int, verbose: bool):
 
     # Run quality test
     console.print("\n[cyan]3. Comparing Quality...[/cyan]")
-    quality_output = str(output_path / "quality_report.json") if output_dir else None
+    quality_output = str(output_path / "quality_report.json") if output_path else None
     try:
         quality(input_file, quality_output, verbose)
     except Exception as e:

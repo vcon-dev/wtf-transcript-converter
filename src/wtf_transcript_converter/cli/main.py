@@ -7,7 +7,7 @@ and managing WTF documents.
 
 import json
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional, Union
 
 import click
 from rich.console import Console
@@ -16,6 +16,7 @@ from rich.table import Table
 
 from ..core.validator import validate_wtf_document
 from ..providers.assemblyai import AssemblyAIConverter
+from ..providers.base import BaseProviderConverter
 from ..providers.canary import CanaryConverter
 from ..providers.deepgram import DeepgramConverter
 from ..providers.parakeet import ParakeetConverter
@@ -26,18 +27,18 @@ from .cross_provider import cross_provider
 console = Console()
 
 
-def _get_converter(provider: str):
+def _get_converter(provider: str) -> Optional[Any]:
     """Get converter instance for the specified provider."""
     provider = provider.lower()
 
     if provider == "whisper":
-        return WhisperConverter()
+        return WhisperConverter()  # type: ignore[no-untyped-call]
     elif provider == "deepgram":
-        return DeepgramConverter()
+        return DeepgramConverter()  # type: ignore[no-untyped-call]
     elif provider == "assemblyai":
-        return AssemblyAIConverter()
+        return AssemblyAIConverter()  # type: ignore[no-untyped-call]
     elif provider == "rev-ai":
-        return RevAIConverter()
+        return RevAIConverter()  # type: ignore[no-untyped-call]
     elif provider == "canary":
         return CanaryConverter()
     elif provider == "parakeet":
@@ -49,7 +50,7 @@ def _get_converter(provider: str):
 
 @click.group()
 @click.version_option(version="0.1.0")
-def main():
+def main() -> None:
     """
     vCon WTF - Convert transcript JSONs to/from IETF World Transcription Format.
 
@@ -75,7 +76,9 @@ def main():
 )
 @click.option("--validate/--no-validate", default=True, help="Validate output WTF document")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def to_wtf(input_file: str, provider: str, output: Optional[str], validate: bool, verbose: bool):
+def to_wtf(
+    input_file: str, provider: str, output: Optional[str], validate: bool, verbose: bool
+) -> None:
     """Convert provider-specific transcript to WTF format."""
     if verbose:
         console.print(f"[blue]Converting {input_file} from {provider} to WTF format...[/blue]")
@@ -115,7 +118,7 @@ def to_wtf(input_file: str, provider: str, output: Optional[str], validate: bool
         # Determine output file
         if not output:
             input_path = Path(input_file)
-            output = input_path.with_suffix(".wtf.json")
+            output = str(input_path.with_suffix(".wtf.json"))
 
         # Save output
         with open(output, "w", encoding="utf-8") as f:
@@ -155,7 +158,7 @@ def to_wtf(input_file: str, provider: str, output: Optional[str], validate: bool
     help="Output file path (default: input_file.{provider}.json)",
 )
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def from_wtf(input_file: str, provider: str, output: Optional[str], verbose: bool):
+def from_wtf(input_file: str, provider: str, output: Optional[str], verbose: bool) -> None:
     """Convert WTF format to provider-specific transcript."""
     if verbose:
         console.print(f"[blue]Converting {input_file} from WTF to {provider} format...[/blue]")
@@ -191,7 +194,7 @@ def from_wtf(input_file: str, provider: str, output: Optional[str], verbose: boo
         # Determine output file
         if not output:
             input_path = Path(input_file)
-            output = input_path.with_suffix(f".{provider}.json")
+            output = str(input_path.with_suffix(f".{provider}.json"))
 
         # Save output
         with open(output, "w", encoding="utf-8") as f:
@@ -217,7 +220,7 @@ def from_wtf(input_file: str, provider: str, output: Optional[str], verbose: boo
 @main.command()
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def validate(input_file: str, verbose: bool):
+def validate(input_file: str, verbose: bool) -> None:
     """Validate WTF document format."""
     if verbose:
         console.print(f"[blue]Validating WTF document: {input_file}[/blue]")
@@ -245,7 +248,7 @@ def batch(
     provider: Optional[str],
     pattern: str,
     verbose: bool,
-):
+) -> None:
     """Batch convert multiple transcript files."""
     input_path = Path(input_dir)
     output_path = Path(output_dir)
@@ -263,7 +266,7 @@ def batch(
 
 
 @main.command()
-def providers():
+def providers() -> None:
     """List supported transcription providers."""
     table = Table(title="Supported Transcription Providers")
     table.add_column("Provider", style="cyan")
