@@ -30,6 +30,7 @@ dependencies = [
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",
     "pytest-mock>=3.15.1",
+    "twine>=6.2.0",
 ]
 
 [project.optional-dependencies]
@@ -76,7 +77,7 @@ vcon-wtf = "wtf_transcript_converter.cli.main:main"
 [project.urls]
 Homepage = "https://github.com/vcon-dev/wtf-transcript-converter"
 Repository = "https://github.com/vcon-dev/wtf-transcript-converter"
-Documentation = "https://wtf-transcript-converter.readthedocs.io"
+Documentation = "https://vcon-wtf.readthedocs.io"
 "Bug Tracker" = "https://github.com/vcon-dev/wtf-transcript-converter/issues"
 
 [tool.hatch.build.targets.wheel]

@@ -59,10 +59,10 @@ CLI:
 .. code-block:: bash
 
    # Test consistency
-   wtf-convert cross-provider consistency input.json --verbose
+   vcon-wtf cross-provider consistency input.json --verbose
    
    # Save report to file
-   wtf-convert cross-provider consistency input.json --output consistency_report.json
+   vcon-wtf cross-provider consistency input.json --output consistency_report.json
 
 Report Structure
 ~~~~~~~~~~~~~~~~
@@ -131,10 +131,10 @@ CLI:
 .. code-block:: bash
 
    # Benchmark performance
-   wtf-convert cross-provider performance input.json --iterations 5
+   vcon-wtf cross-provider performance input.json --iterations 5
    
    # Save report to file
-   wtf-convert cross-provider performance input.json --output performance_report.json
+   vcon-wtf cross-provider performance input.json --output performance_report.json
 
 Metrics Collected
 ~~~~~~~~~~~~~~~~~
@@ -206,10 +206,10 @@ CLI:
 .. code-block:: bash
 
    # Compare quality
-   wtf-convert cross-provider quality input.json --verbose
+   vcon-wtf cross-provider quality input.json --verbose
    
    # Save report to file
-   wtf-convert cross-provider quality input.json --output quality_report.json
+   vcon-wtf cross-provider quality input.json --output quality_report.json
 
 Quality Metrics
 ~~~~~~~~~~~~~~~
@@ -256,7 +256,7 @@ CLI:
 .. code-block:: bash
 
    # Run all cross-provider tests
-   wtf-convert cross-provider all input.json --output-dir reports/
+   vcon-wtf cross-provider all input.json --output-dir reports/
    
    # With custom options
    wtf-convert cross-provider all input.json \
@@ -381,10 +381,10 @@ Integrate cross-provider testing into your CI/CD pipeline:
              python-version: '3.12'
          - name: Install dependencies
            run: |
-             pip install wtf-transcript-converter[integration]
+             pip install vcon-wtf[integration]
          - name: Run cross-provider tests
            run: |
-             wtf-convert cross-provider all test_data/sample.wav \
+             vcon-wtf cross-provider all test_data/sample.wav \
                --output-dir reports/ \
                --iterations 3
          - name: Upload reports

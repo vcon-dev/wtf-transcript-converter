@@ -1,6 +1,6 @@
-# Contributing to WTF Transcript Converter
+# Contributing to vCon WTF
 
-Thank you for your interest in contributing to the WTF Transcript Converter! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to vCon WTF! This document provides guidelines and information for contributors.
 
 ## Table of Contents
 
@@ -337,4 +337,4 @@ Contributors will be recognized in:
 - Release notes
 - Project documentation
 
-Thank you for contributing to WTF Transcript Converter! 🎉
+Thank you for contributing to vCon WTF! 🎉

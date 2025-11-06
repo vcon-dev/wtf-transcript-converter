@@ -1,5 +1,5 @@
 """
-WTF Transcript Converter Library.
+vCon WTF Library.
 
 A Python library for converting transcript JSONs to/from the IETF World Transcription Format (WTF).
 Supports major transcription providers including Whisper, Deepgram, AssemblyAI, and more.

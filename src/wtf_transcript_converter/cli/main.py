@@ -1,5 +1,5 @@
 """
-Command-line interface for WTF transcript converter.
+Command-line interface for vCon WTF.
 
 This module provides the main CLI entry point for converting transcript formats
 and managing WTF documents.
@@ -51,7 +51,7 @@ def _get_converter(provider: str):
 @click.version_option(version="0.1.0")
 def main():
     """
-    WTF Transcript Converter - Convert transcript JSONs to/from IETF World Transcription Format.
+    vCon WTF - Convert transcript JSONs to/from IETF World Transcription Format.
 
     This tool provides conversion between various transcription provider formats
     and the standardized WTF format, with full vCon integration support.
@@ -89,7 +89,7 @@ def to_wtf(input_file: str, provider: str, output: Optional[str], validate: bool
         converter = _get_converter(provider)
         if not converter:
             console.print(f"[red]Error: Unsupported provider '{provider}'[/red]")
-            console.print("Use 'wtf-convert providers' to see supported providers")
+            console.print("Use 'vcon-wtf providers' to see supported providers")
             return
 
         # Convert to WTF
@@ -174,7 +174,7 @@ def from_wtf(input_file: str, provider: str, output: Optional[str], verbose: boo
         converter = _get_converter(provider)
         if not converter:
             console.print(f"[red]Error: Unsupported provider '{provider}'[/red]")
-            console.print("Use 'wtf-convert providers' to see supported providers")
+            console.print("Use 'vcon-wtf providers' to see supported providers")
             return
 
         # Convert from WTF

@@ -1,7 +1,7 @@
 .PHONY: help install install-dev test test-cov lint format type-check security clean build publish docs
 
 help: ## Show this help message
-	@echo "WTF Transcript Converter - Development Commands"
+	@echo "vCon WTF - Development Commands"
 	@echo "=============================================="
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
@@ -101,16 +101,16 @@ ci-build: ## Run CI build
 	uv build
 
 cross-provider-test: ## Run cross-provider consistency test
-	uv run wtf-convert cross-provider consistency tests/fixtures/whisper_sample.json --verbose
+	uv run vcon-wtf cross-provider consistency tests/fixtures/whisper_sample.json --verbose
 
 cross-provider-performance: ## Run cross-provider performance test
-	uv run wtf-convert cross-provider performance tests/fixtures/whisper_sample.json --iterations 3
+	uv run vcon-wtf cross-provider performance tests/fixtures/whisper_sample.json --iterations 3
 
 cross-provider-quality: ## Run cross-provider quality test
-	uv run wtf-convert cross-provider quality tests/fixtures/whisper_sample.json --verbose
+	uv run vcon-wtf cross-provider quality tests/fixtures/whisper_sample.json --verbose
 
 cross-provider-all: ## Run all cross-provider tests
-	uv run wtf-convert cross-provider all tests/fixtures/whisper_sample.json --output-dir reports/
+	uv run vcon-wtf cross-provider all tests/fixtures/whisper_sample.json --output-dir reports/
 
 setup-dev: install-dev pre-commit-install ## Set up development environment
 	@echo "Development environment set up complete!"

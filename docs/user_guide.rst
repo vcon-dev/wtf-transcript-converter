@@ -1,7 +1,7 @@
 User Guide
 ==========
 
-This comprehensive guide covers all aspects of using the WTF Transcript Converter library.
+This comprehensive guide covers all aspects of using the vCon WTF library.
 
 Getting Started
 ---------------
@@ -14,7 +14,7 @@ See the :doc:`installation` guide for detailed installation instructions.
 Basic Concepts
 ~~~~~~~~~~~~~~
 
-The WTF Transcript Converter standardizes transcription data across multiple providers by converting them to and from the IETF World Transcription Format (WTF). This enables:
+vCon WTF standardizes transcription data across multiple providers by converting them to and from the IETF World Transcription Format (WTF). This enables:
 
 * **Interoperability**: Use transcriptions from any supported provider
 * **Consistency**: Standardized format for all transcriptions
@@ -221,19 +221,19 @@ Convert to WTF:
 
 .. code-block:: bash
 
-   wtf-convert to-wtf input.json --provider whisper --output result.wtf.json
+   vcon-wtf to-wtf input.json --provider whisper --output result.wtf.json
 
 Convert from WTF:
 
 .. code-block:: bash
 
-   wtf-convert from-wtf result.wtf.json --provider deepgram --output deepgram_output.json
+   vcon-wtf from-wtf result.wtf.json --provider deepgram --output deepgram_output.json
 
 Validate WTF document:
 
 .. code-block:: bash
 
-   wtf-convert validate result.wtf.json
+   vcon-wtf validate result.wtf.json
 
 Cross-Provider Testing
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -242,25 +242,25 @@ Test consistency:
 
 .. code-block:: bash
 
-   wtf-convert cross-provider consistency input.json --verbose
+   vcon-wtf cross-provider consistency input.json --verbose
 
 Benchmark performance:
 
 .. code-block:: bash
 
-   wtf-convert cross-provider performance input.json --iterations 5
+   vcon-wtf cross-provider performance input.json --iterations 5
 
 Compare quality:
 
 .. code-block:: bash
 
-   wtf-convert cross-provider quality input.json --output quality_report.json
+   vcon-wtf cross-provider quality input.json --output quality_report.json
 
 Run all tests:
 
 .. code-block:: bash
 
-   wtf-convert cross-provider all input.json --output-dir reports/
+   vcon-wtf cross-provider all input.json --output-dir reports/
 
 Advanced Usage
 --------------
@@ -470,8 +470,8 @@ If you encounter import errors:
    python --version  # Should be 3.10 or higher
    
    # Reinstall package
-   pip uninstall wtf-transcript-converter
-   pip install wtf-transcript-converter
+   pip uninstall vcon-wtf
+   pip install vcon-wtf
 
 **Validation Errors**
 ^^^^^^^^^^^^^^^^^^^^^
@@ -510,10 +510,10 @@ If CLI commands fail:
 .. code-block:: bash
 
    # Check installation
-   pip show wtf-transcript-converter
+   pip show vcon-wtf
    
    # Test with verbose output
-   wtf-convert --help
+   vcon-wtf --help
    
    # Check file permissions
    ls -la input.json

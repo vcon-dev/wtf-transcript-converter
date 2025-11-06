@@ -1,4 +1,4 @@
-# WTF Transcript Converter
+# vCon WTF
 
 A Python library for converting transcript JSONs to/from the IETF World Transcription Format (WTF). This library provides seamless conversion between different transcription provider formats and the standardized WTF format, with full integration support for vCon containers.
 
@@ -15,7 +15,7 @@ A Python library for converting transcript JSONs to/from the IETF World Transcri
 
 ```bash
 # Install from PyPI (when available)
-pip install wtf-transcript-converter
+pip install vcon-wtf
 
 # Or install from source
 git clone https://github.com/vcon-dev/wtf-transcript-converter.git
@@ -48,16 +48,16 @@ else:
 
 ```bash
 # Convert to WTF format
-wtf-convert to-wtf input.json --provider whisper --output output.json
+vcon-wtf to-wtf input.json --provider whisper --output output.json
 
 # Convert from WTF format
-wtf-convert from-wtf input.json --provider deepgram --output output.json
+vcon-wtf from-wtf input.json --provider deepgram --output output.json
 
 # Validate WTF document
-wtf-convert validate input.json
+vcon-wtf validate input.json
 
 # Batch conversion
-wtf-convert batch --input-dir ./transcripts --output-dir ./wtf --provider auto
+vcon-wtf batch --input-dir ./transcripts --output-dir ./wtf --provider auto
 ```
 
 ### vCon Integration
@@ -119,10 +119,10 @@ wtf_doc = parakeet_converter.convert_to_wtf(parakeet_result)
 
 ```bash
 # Convert with Canary
-wtf-convert to-wtf canary_output.json --provider canary --output result.wtf.json
+vcon-wtf to-wtf canary_output.json --provider canary --output result.wtf.json
 
 # Convert with Parakeet
-wtf-convert to-wtf parakeet_output.json --provider parakeet --output result.wtf.json
+vcon-wtf to-wtf parakeet_output.json --provider parakeet --output result.wtf.json
 ```
 
 ## Cross-Provider Testing
@@ -133,37 +133,37 @@ The library includes comprehensive cross-provider testing capabilities:
 
 ```bash
 # Test consistency across all providers
-wtf-convert cross-provider consistency input.json --verbose
+vcon-wtf cross-provider consistency input.json --verbose
 
 # Generate detailed consistency report
-wtf-convert cross-provider consistency input.json --output consistency_report.json
+vcon-wtf cross-provider consistency input.json --output consistency_report.json
 ```
 
 ### Performance Benchmarking
 
 ```bash
 # Benchmark performance across providers
-wtf-convert cross-provider performance input.json --iterations 5
+vcon-wtf cross-provider performance input.json --iterations 5
 
 # Compare conversion speed and resource usage
-wtf-convert cross-provider performance input.json --output performance_report.json
+vcon-wtf cross-provider performance input.json --output performance_report.json
 ```
 
 ### Quality Comparison
 
 ```bash
 # Compare quality metrics across providers
-wtf-convert cross-provider quality input.json --verbose
+vcon-wtf cross-provider quality input.json --verbose
 
 # Generate quality analysis report
-wtf-convert cross-provider quality input.json --output quality_report.json
+vcon-wtf cross-provider quality input.json --output quality_report.json
 ```
 
 ### Comprehensive Testing
 
 ```bash
 # Run all cross-provider tests
-wtf-convert cross-provider all input.json --output-dir reports/
+vcon-wtf cross-provider all input.json --output-dir reports/
 
 # This generates:
 # - reports/consistency_report.json
@@ -209,7 +209,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Links
 
 - **Repository**: https://github.com/vcon-dev/wtf-transcript-converter
-- **Documentation**: https://wtf-transcript-converter.readthedocs.io
+- **Documentation**: https://vcon-wtf.readthedocs.io
 - **vCon Specification**: https://github.com/vcon-dev/draft-ietf-vcon-core
 - **WTF Extension Draft**: https://github.com/vcon-dev/draft-howe-vcon-wtf-extension
 

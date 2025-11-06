@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../src'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'WTF Transcript Converter'
+project = 'vCon WTF'
 copyright = '2024, vCon Development Team'
 author = 'vCon Development Team'
 release = '0.1.0'
@@ -143,7 +143,7 @@ html_context = {
 }
 
 # HTML title
-html_title = 'WTF Transcript Converter Documentation'
+html_title = 'vCon WTF Documentation'
 
 # HTML short title
-html_short_title = 'WTF Transcript Converter'
+html_short_title = 'vCon WTF'

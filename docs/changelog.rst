@@ -1,7 +1,7 @@
 Changelog
 =========
 
-All notable changes to this project will be documented in this file.
+All notable changes to vCon WTF will be documented in this file.
 
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
@@ -45,7 +45,7 @@ Security
 Added
 ~~~~~
 
-* Initial release of WTF Transcript Converter
+* Initial release of vCon WTF
 * Support for 6 major transcription providers:
   * Whisper (OpenAI)
   * Deepgram
@@ -141,14 +141,14 @@ This is the first major release of the WTF Transcript Converter library. It prov
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter
-   wtf-convert --help
+   pip install vcon-wtf
+   vcon-wtf --help
 
 **Cross-Provider Testing:**
 
 .. code-block:: bash
 
-   wtf-convert cross-provider all input.json --output-dir reports/
+   vcon-wtf cross-provider all input.json --output-dir reports/
 
 This release establishes a solid foundation for transcription format standardization and cross-provider interoperability.
 
@@ -186,10 +186,10 @@ Upgrading from 0.0.1 to 0.1.0
 .. code-block:: bash
 
    # Old
-   wtf-convert convert input.json --provider whisper
+   vcon-wtf convert input.json --provider whisper
    
    # New
-   wtf-convert to-wtf input.json --provider whisper
+   vcon-wtf to-wtf input.json --provider whisper
 
 3. **Update validation**:
 

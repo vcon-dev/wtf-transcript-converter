@@ -1,5 +1,5 @@
 def main():
-    print("Hello from wtf-transcript-converter!")
+    print("Hello from vcon-wtf!")
 
 
 if __name__ == "__main__":

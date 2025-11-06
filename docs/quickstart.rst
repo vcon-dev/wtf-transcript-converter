@@ -1,7 +1,7 @@
 Quick Start Guide
 =================
 
-This guide will get you up and running with the WTF Transcript Converter in just a few minutes.
+This guide will get you up and running with vCon WTF in just a few minutes.
 
 Installation
 ------------
@@ -10,7 +10,7 @@ First, install the library:
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter
+   pip install vcon-wtf
 
 Basic Usage
 -----------
@@ -68,13 +68,13 @@ Convert using the CLI:
 .. code-block:: bash
 
    # Convert to WTF format
-   wtf-convert to-wtf input.json --provider whisper --output result.wtf.json
+   vcon-wtf to-wtf input.json --provider whisper --output result.wtf.json
    
    # Convert from WTF format
-   wtf-convert from-wtf result.wtf.json --provider deepgram --output deepgram_output.json
+   vcon-wtf from-wtf result.wtf.json --provider deepgram --output deepgram_output.json
    
    # Validate WTF document
-   wtf-convert validate result.wtf.json
+   vcon-wtf validate result.wtf.json
 
 Cross-Provider Testing
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -84,16 +84,16 @@ Test consistency across multiple providers:
 .. code-block:: bash
 
    # Test consistency
-   wtf-convert cross-provider consistency input.json --verbose
+   vcon-wtf cross-provider consistency input.json --verbose
    
    # Benchmark performance
-   wtf-convert cross-provider performance input.json --iterations 5
+   vcon-wtf cross-provider performance input.json --iterations 5
    
    # Compare quality
-   wtf-convert cross-provider quality input.json --output quality_report.json
+   vcon-wtf cross-provider quality input.json --output quality_report.json
    
    # Run all tests
-   wtf-convert cross-provider all input.json --output-dir reports/
+   vcon-wtf cross-provider all input.json --output-dir reports/
 
 Working with Different Providers
 --------------------------------

@@ -18,7 +18,7 @@ class TestMainCLI:
         """Test main command help."""
         result = self.runner.invoke(main, ["--help"])
         assert result.exit_code == 0
-        assert "WTF Transcript Converter" in result.output
+        assert "vCon WTF" in result.output
 
     def test_providers_command(self):
         """Test providers command."""

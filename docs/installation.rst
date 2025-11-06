@@ -1,7 +1,7 @@
 Installation
 ============
 
-The WTF Transcript Converter can be installed via pip or from source.
+vCon WTF can be installed via pip or from source.
 
 Prerequisites
 -------------
@@ -15,17 +15,17 @@ Installation Methods
 Install from PyPI
 ~~~~~~~~~~~~~~~~~
 
-The recommended way to install the WTF Transcript Converter is using pip:
+The recommended way to install vCon WTF is using pip:
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter
+   pip install vcon-wtf
 
 Or using uv for faster installation:
 
 .. code-block:: bash
 
-   uv add wtf-transcript-converter
+   uv add vcon-wtf
 
 Install with Optional Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,13 +34,13 @@ For integration testing with real API providers:
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter[integration]
+   pip install vcon-wtf[integration]
 
 For development dependencies:
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter[dev]
+   pip install vcon-wtf[dev]
 
 Install from Source
 ~~~~~~~~~~~~~~~~~~~
@@ -83,9 +83,9 @@ Verify the installation by running:
 
 .. code-block:: bash
 
-   wtf-convert --help
+   vcon-wtf --help
 
-You should see the help output for the WTF Transcript Converter CLI.
+You should see the help output for the vCon WTF CLI.
 
 Dependencies
 ------------
@@ -152,17 +152,17 @@ If you encounter permission errors during installation, try using a virtual envi
 
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install wtf-transcript-converter
+   pip install vcon-wtf
 
 CLI Not Found
 ^^^^^^^^^^^^^
 
-If the `wtf-convert` command is not found, ensure the package is properly installed:
+If the `vcon-wtf` command is not found, ensure the package is properly installed:
 
 .. code-block:: bash
 
-   pip show wtf-transcript-converter
-   which wtf-convert  # On Windows: where wtf-convert
+   pip show vcon-wtf
+   which vcon-wtf  # On Windows: where vcon-wtf
 
 Getting Help
 ------------

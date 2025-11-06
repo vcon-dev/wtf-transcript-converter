@@ -1,7 +1,7 @@
-WTF Transcript Converter Documentation
-======================================
+vCon WTF Documentation
+======================
 
-Welcome to the WTF Transcript Converter documentation! This library provides comprehensive support for converting between various transcription provider formats and the standardized IETF World Transcription Format (WTF).
+Welcome to the vCon WTF documentation! This library provides comprehensive support for converting between various transcription provider formats and the standardized IETF World Transcription Format (WTF).
 
 .. toctree::
    :maxdepth: 2
@@ -20,7 +20,7 @@ Welcome to the WTF Transcript Converter documentation! This library provides com
 Overview
 --------
 
-The WTF Transcript Converter is a Python library that standardizes transcription data across multiple providers. It supports bidirectional conversion between provider-specific formats and the IETF World Transcription Format (WTF), enabling interoperability and consistency in transcription workflows.
+vCon WTF is a Python library that standardizes transcription data across multiple providers. It supports bidirectional conversion between provider-specific formats and the IETF World Transcription Format (WTF), enabling interoperability and consistency in transcription workflows.
 
 Key Features
 ~~~~~~~~~~~~
@@ -49,7 +49,7 @@ Install the library:
 
 .. code-block:: bash
 
-   pip install wtf-transcript-converter
+   pip install vcon-wtf
 
 Convert a transcription:
 
@@ -65,13 +65,13 @@ Use the CLI:
 
 .. code-block:: bash
 
-   wtf-convert to-wtf input.json --provider whisper --output result.wtf.json
+   vcon-wtf to-wtf input.json --provider whisper --output result.wtf.json
 
 Cross-Provider Testing:
 
 .. code-block:: bash
 
-   wtf-convert cross-provider all input.json --output-dir reports/
+   vcon-wtf cross-provider all input.json --output-dir reports/
 
 Indices and tables
 ==================
