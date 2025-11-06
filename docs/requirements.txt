@@ -1,0 +1,15 @@
+# Documentation build requirements for Read the Docs
+# These are the dependencies needed to build the Sphinx documentation
+
+# Core Sphinx
+sphinx>=8.2.3
+
+# Theme
+sphinx-rtd-theme>=3.0.2
+
+# Extensions
+sphinx-autodoc-typehints>=3.2.0
+myst-parser>=4.0.1
+
+# Note: The project dependencies (pydantic, click, etc.) are installed
+# via the main project installation in .readthedocs.yml
