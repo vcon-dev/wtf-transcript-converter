@@ -6,6 +6,7 @@ They require real audio files and API keys to run.
 """
 
 import os
+from pathlib import Path
 from typing import Any, Dict
 
 import pytest
@@ -79,20 +80,34 @@ class TestRealWhisperAPI:
 
             # Convert to WTF
             # Handle empty transcripts (common with non-speech audio)
-            if not deepgram_response["results"]["channels"][0]["alternatives"][0]["transcript"]:
-                deepgram_response["results"]["channels"][0]["alternatives"][0][
-                    "transcript"
-                ] = "Test audio transcription"
-                deepgram_response["results"]["channels"][0]["alternatives"][0]["confidence"] = 0.5
-                deepgram_response["results"]["channels"][0]["alternatives"][0]["words"] = [
+            if not whisper_response.get("text"):
+                whisper_response["text"] = "Test audio transcription"
+                whisper_response["segments"] = [
                     {
-                        "word": "Test",
+                        "id": 0,
                         "start": 0.0,
                         "end": 1.0,
-                        "confidence": 0.5,
-                        "speaker": 0,
-                        "speaker_confidence": 0.5,
-                        "punctuated_word": "Test",
+                        "text": "Test audio transcription",
+                        "words": [
+                            {
+                                "word": "Test",
+                                "start": 0.0,
+                                "end": 0.5,
+                                "probability": 0.5,
+                            },
+                            {
+                                "word": "audio",
+                                "start": 0.5,
+                                "end": 0.75,
+                                "probability": 0.5,
+                            },
+                            {
+                                "word": "transcription",
+                                "start": 0.75,
+                                "end": 1.0,
+                                "probability": 0.5,
+                            },
+                        ],
                     }
                 ]
             wtf_doc = whisper_converter.convert_to_wtf(whisper_response)
@@ -341,20 +356,16 @@ class TestRealAssemblyAIAPI:
 
             # Convert to WTF
             # Handle empty transcripts (common with non-speech audio)
-            if not deepgram_response["results"]["channels"][0]["alternatives"][0]["transcript"]:
-                deepgram_response["results"]["channels"][0]["alternatives"][0][
-                    "transcript"
-                ] = "Test audio transcription"
-                deepgram_response["results"]["channels"][0]["alternatives"][0]["confidence"] = 0.5
-                deepgram_response["results"]["channels"][0]["alternatives"][0]["words"] = [
+            if not assemblyai_response.get("text"):
+                assemblyai_response["text"] = "Test audio transcription"
+                assemblyai_response["confidence"] = 0.5
+                assemblyai_response["words"] = [
                     {
-                        "word": "Test",
+                        "text": "Test",
                         "start": 0.0,
                         "end": 1.0,
                         "confidence": 0.5,
                         "speaker": 0,
-                        "speaker_confidence": 0.5,
-                        "punctuated_word": "Test",
                     }
                 ]
             wtf_doc = assemblyai_converter.convert_to_wtf(assemblyai_response)

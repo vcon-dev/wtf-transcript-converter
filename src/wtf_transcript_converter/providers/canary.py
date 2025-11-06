@@ -6,7 +6,7 @@ This module provides conversion between Canary (NVIDIA NeMo) transcription forma
 
 import os
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List
 
 from wtf_transcript_converter.core.models import (
     WTFAudio,
@@ -20,17 +20,13 @@ from wtf_transcript_converter.core.models import (
 )
 from wtf_transcript_converter.providers.base import BaseProviderConverter
 from wtf_transcript_converter.utils.confidence_utils import normalize_confidence
-from wtf_transcript_converter.utils.language_utils import (
-    is_valid_bcp47,
-    normalize_language_code,
-)
+from wtf_transcript_converter.utils.language_utils import normalize_language_code
 from wtf_transcript_converter.utils.time_utils import get_current_iso_timestamp
 
 try:
     import librosa
-    import soundfile as sf
     import torch
-    from transformers import AutoModelForCTC, AutoTokenizer, pipeline
+    from transformers import pipeline
 
     HF_AVAILABLE = True
 except ImportError:

@@ -6,7 +6,7 @@ different transcript formats and WTF.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Generic, TypeVar
+from typing import Any, Dict, TypeVar
 
 from .models import WTFDocument
 

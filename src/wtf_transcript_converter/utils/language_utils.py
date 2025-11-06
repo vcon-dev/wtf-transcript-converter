@@ -5,7 +5,6 @@ This module provides utilities for language code validation and normalization.
 """
 
 import re
-from typing import Optional
 
 
 def is_valid_bcp47(language_code: str) -> bool:

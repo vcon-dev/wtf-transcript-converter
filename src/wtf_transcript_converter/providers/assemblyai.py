@@ -18,7 +18,6 @@ from ..core.models import (
     WTFTranscript,
     WTFWord,
 )
-from ..utils.confidence_utils import normalize_confidence
 from ..utils.language_utils import normalize_language_code
 
 

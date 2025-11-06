@@ -6,26 +6,13 @@ across multiple transcription providers.
 """
 
 import json
-import time
 from pathlib import Path
-from typing import Any, Dict, List
 
 import click
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
-
-from ..core.models import WTFDocument
-from ..core.validator import validate_wtf_document
-from ..providers import (
-    AssemblyAIConverter,
-    CanaryConverter,
-    DeepgramConverter,
-    ParakeetConverter,
-    RevAIConverter,
-    WhisperConverter,
-)
 
 console = Console()
 

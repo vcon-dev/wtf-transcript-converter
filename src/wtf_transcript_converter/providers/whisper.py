@@ -5,13 +5,12 @@ This module provides conversion between Whisper JSON format and WTF format.
 """
 
 import math
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from ..core.converter import FromWTFConverter, ToWTFConverter
 from ..core.models import (
     WTFAudio,
     WTFDocument,
-    WTFExtensions,
     WTFMetadata,
     WTFQuality,
     WTFSegment,

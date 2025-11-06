@@ -8,13 +8,10 @@ conversion speed, memory usage, and other performance metrics.
 import os
 import time
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 import psutil
 import pytest
-
-from wtf_transcript_converter.core.models import WTFDocument
 from wtf_transcript_converter.providers import (
     AssemblyAIConverter,
     CanaryConverter,

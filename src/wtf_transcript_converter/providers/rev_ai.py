@@ -5,7 +5,7 @@ This module provides conversion between Rev.ai transcription format and WTF form
 """
 
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List
 
 from wtf_transcript_converter.core.models import (
     WTFAudio,
@@ -24,12 +24,10 @@ from wtf_transcript_converter.utils.time_utils import get_current_iso_timestamp
 
 
 class RevAIConverter(BaseProviderConverter):
+    """Converter for Rev.ai JSON format to/from WTF format."""
+
     def __init__(self):
         super().__init__("rev_ai")
-
-    """
-    Converter for Rev.ai transcription format to/from WTF.
-    """
     provider_name: str = "rev_ai"
     description: str = "Rev.ai transcription service"
     status: str = "Implemented"

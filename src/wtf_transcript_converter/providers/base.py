@@ -4,7 +4,7 @@ Base provider converter implementation.
 This module provides the base implementation for provider-specific converters.
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from typing import Any, Dict
 
 from ..core.converter import FromWTFConverter, ToWTFConverter

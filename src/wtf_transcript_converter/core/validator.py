@@ -5,9 +5,9 @@ This module provides validation functions for WTF documents and their components
 """
 
 import re
-from typing import Any, Dict, List, Tuple, Union
+from typing import List, Tuple
 
-from .models import WTFDocument, WTFMetadata, WTFSegment, WTFTranscript, WTFWord
+from .models import WTFDocument
 
 
 def validate_wtf_document(doc: WTFDocument) -> Tuple[bool, List[str]]:

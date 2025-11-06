@@ -5,9 +5,8 @@ This module tests the same audio content across multiple providers to ensure
 WTF format consistency and validate standardization.
 """
 
-import re
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 from wtf_transcript_converter.core.models import WTFDocument
 from wtf_transcript_converter.core.validator import validate_wtf_document

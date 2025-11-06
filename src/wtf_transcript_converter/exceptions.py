@@ -27,6 +27,7 @@ class ConversionError(Exception):
         self.context = context or {}
 
     def __str__(self) -> str:
+        """Return string representation of the error."""
         base_msg = self.message
         if self.provider:
             base_msg = f"[{self.provider}] {base_msg}"
@@ -59,6 +60,7 @@ class ValidationError(Exception):
         self.errors = errors or []
 
     def __str__(self) -> str:
+        """Return string representation of the validation error."""
         base_msg = self.message
         if self.field:
             base_msg = f"Field '{self.field}': {base_msg}"
@@ -94,6 +96,7 @@ class ProviderError(Exception):
         self.response_data = response_data or {}
 
     def __str__(self) -> str:
+        """Return string representation of the provider error."""
         base_msg = f"[{self.provider}] {self.message}"
         if self.operation:
             base_msg = f"{base_msg} (Operation: {self.operation})"
@@ -120,6 +123,7 @@ class ConfigurationError(Exception):
         self.value = value
 
     def __str__(self) -> str:
+        """Return string representation of the configuration error."""
         base_msg = self.message
         if self.setting:
             base_msg = f"Setting '{self.setting}': {base_msg}"
@@ -152,6 +156,7 @@ class AudioProcessingError(Exception):
         self.original_error = original_error
 
     def __str__(self) -> str:
+        """Return string representation of the audio processing error."""
         base_msg = self.message
         if self.file_path:
             base_msg = f"File '{self.file_path}': {base_msg}"

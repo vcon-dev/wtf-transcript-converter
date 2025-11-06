@@ -7,7 +7,7 @@ to assess accuracy, completeness, and other quality metrics.
 
 import re
 from dataclasses import dataclass
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any, Dict, List
 
 import pytest
 
