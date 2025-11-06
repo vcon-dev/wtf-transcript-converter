@@ -7,7 +7,7 @@ from wtf_transcript_converter.exceptions import (
     ValidationError,
     ProviderError,
     ConfigurationError,
-    AudioProcessingError
+    AudioProcessingError,
 )
 
 
@@ -47,10 +47,7 @@ class TestConversionError:
         original = ValueError("Original error")
         context = {"file": "test.json"}
         error = ConversionError(
-            "Test error",
-            provider="whisper",
-            original_error=original,
-            context=context
+            "Test error", provider="whisper", original_error=original, context=context
         )
         assert "[whisper] Test error (Original: Original error)" == str(error)
         assert error.provider == "whisper"
@@ -92,10 +89,7 @@ class TestValidationError:
         """Test ValidationError with all parameters."""
         errors = ["Error 1", "Error 2"]
         error = ValidationError(
-            "Test error",
-            field="transcript",
-            value="invalid_value",
-            errors=errors
+            "Test error", field="transcript", value="invalid_value", errors=errors
         )
         assert "Field 'transcript': Test error Errors: Error 1, Error 2" == str(error)
         assert error.field == "transcript"
@@ -142,7 +136,7 @@ class TestProviderError:
             provider="whisper",
             operation="transcribe",
             status_code=404,
-            response_data=response_data
+            response_data=response_data,
         )
         assert "[whisper] Test error (Operation: transcribe) (Status: 404)" == str(error)
         assert error.provider == "whisper"
@@ -175,11 +169,7 @@ class TestConfigurationError:
 
     def test_configuration_error_full(self):
         """Test ConfigurationError with all parameters."""
-        error = ConfigurationError(
-            "Test error",
-            setting="api_key",
-            value="invalid_value"
-        )
+        error = ConfigurationError("Test error", setting="api_key", value="invalid_value")
         assert "Setting 'api_key': Test error (Value: invalid_value)" == str(error)
         assert error.setting == "api_key"
         assert error.value == "invalid_value"
@@ -219,10 +209,7 @@ class TestAudioProcessingError:
         """Test AudioProcessingError with all parameters."""
         original = ValueError("Original error")
         error = AudioProcessingError(
-            "Test error",
-            file_path="test.wav",
-            format="wav",
-            original_error=original
+            "Test error", file_path="test.wav", format="wav", original_error=original
         )
         assert "File 'test.wav': Test error (Format: wav) (Original: Original error)" == str(error)
         assert error.file_path == "test.wav"

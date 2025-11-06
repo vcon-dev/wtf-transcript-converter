@@ -4,7 +4,7 @@ import pytest
 
 from wtf_transcript_converter.utils.confidence_utils import (
     normalize_confidence,
-    calculate_quality_metrics
+    calculate_quality_metrics,
 )
 
 
@@ -50,7 +50,7 @@ class TestConfidenceUtils:
         """Test calculating quality metrics with multiple values."""
         confidences = [0.8, 0.9, 0.3, 0.6]  # One low confidence (< 0.5)
         result = calculate_quality_metrics(confidences)
-        
+
         expected_avg = sum(confidences) / len(confidences)
         assert result["average_confidence"] == expected_avg
         assert result["low_confidence_words"] == 1  # 0.3 < 0.5
@@ -60,7 +60,7 @@ class TestConfidenceUtils:
         """Test calculating quality metrics with all low confidence."""
         confidences = [0.3, 0.4, 0.2]
         result = calculate_quality_metrics(confidences)
-        
+
         assert result["low_confidence_words"] == 3
         assert result["total_words"] == 3
 
@@ -68,6 +68,6 @@ class TestConfidenceUtils:
         """Test calculating quality metrics with all high confidence."""
         confidences = [0.8, 0.9, 0.7]
         result = calculate_quality_metrics(confidences)
-        
+
         assert result["low_confidence_words"] == 0
         assert result["total_words"] == 3

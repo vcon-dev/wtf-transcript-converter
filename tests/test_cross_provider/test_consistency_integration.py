@@ -17,9 +17,9 @@ class TestCrossProviderConsistencyIntegration:
     def test_consistency_tester_initialization(self):
         """Test consistency tester initialization."""
         assert self.tester is not None
-        assert hasattr(self.tester, 'test_consistency_with_sample_data')
-        assert hasattr(self.tester, 'analyze_consistency')
-        assert hasattr(self.tester, 'generate_consistency_report')
+        assert hasattr(self.tester, "test_consistency_with_sample_data")
+        assert hasattr(self.tester, "analyze_consistency")
+        assert hasattr(self.tester, "generate_consistency_report")
 
     def test_analyze_consistency_with_whisper_data(self):
         """Test consistency analysis with Whisper data."""
@@ -27,29 +27,29 @@ class TestCrossProviderConsistencyIntegration:
         sample_file = Path(__file__).parent.parent / "fixtures" / "whisper_sample.json"
         if not sample_file.exists():
             pytest.skip("Sample Whisper file not found")
-        
+
         with open(sample_file) as f:
             sample_data = json.load(f)
-        
+
         # Test consistency analysis
         results = self.tester.test_consistency_with_sample_data(sample_data)
-        
+
         assert isinstance(results, list)
         assert len(results) > 0
-        
+
         # Check that we have ConsistencyResult objects
         for result in results:
-            assert hasattr(result, 'provider')
-            assert hasattr(result, 'is_valid')
-            assert hasattr(result, 'wtf_doc')
-            assert hasattr(result, 'confidence_score')
+            assert hasattr(result, "provider")
+            assert hasattr(result, "is_valid")
+            assert hasattr(result, "wtf_doc")
+            assert hasattr(result, "confidence_score")
 
     def test_analyze_consistency_with_empty_data(self):
         """Test consistency analysis with empty data."""
         empty_data = {}
-        
+
         results = self.tester.test_consistency_with_sample_data(empty_data)
-        
+
         assert isinstance(results, list)
         # With empty data, we might get empty results or results with errors
         # The exact behavior depends on how providers handle empty data
@@ -58,13 +58,11 @@ class TestCrossProviderConsistencyIntegration:
         """Test consistency analysis with minimal data."""
         minimal_data = {
             "text": "Hello world",
-            "segments": [
-                {"start": 0.0, "end": 1.0, "text": "Hello world"}
-            ]
+            "segments": [{"start": 0.0, "end": 1.0, "text": "Hello world"}],
         }
-        
+
         results = self.tester.test_consistency_with_sample_data(minimal_data)
-        
+
         assert isinstance(results, list)
         # Should have results for multiple providers
         assert len(results) > 0
@@ -75,13 +73,13 @@ class TestCrossProviderConsistencyIntegration:
         sample_file = Path(__file__).parent.parent / "fixtures" / "whisper_sample.json"
         if not sample_file.exists():
             pytest.skip("Sample Whisper file not found")
-        
+
         with open(sample_file) as f:
             sample_data = json.load(f)
-        
+
         # Test consistency first to get results
         results = self.tester.test_consistency_with_sample_data(sample_data)
-        
+
         # Test the generate_consistency_report method with actual results
         if results:
             report = self.tester.generate_consistency_report(results)
@@ -89,7 +87,7 @@ class TestCrossProviderConsistencyIntegration:
             assert len(report) > 0
         else:
             # If no results, just test that the method exists
-            assert hasattr(self.tester, 'generate_consistency_report')
+            assert hasattr(self.tester, "generate_consistency_report")
             assert callable(self.tester.generate_consistency_report)
 
     def test_consistency_with_different_providers(self):
@@ -105,12 +103,12 @@ class TestCrossProviderConsistencyIntegration:
                     "text": "Hello world",
                     "words": [
                         {"start": 0.0, "end": 0.5, "text": "Hello"},
-                        {"start": 0.5, "end": 1.0, "text": "world"}
-                    ]
+                        {"start": 0.5, "end": 1.0, "text": "world"},
+                    ],
                 }
-            ]
+            ],
         }
-        
+
         results = self.tester.test_consistency_with_sample_data(whisper_data)
         assert isinstance(results, list)
         assert len(results) > 0
@@ -128,21 +126,21 @@ class TestCrossProviderConsistencyIntegration:
                     "text": "Hello world",
                     "words": [
                         {"start": 0.0, "end": 0.5, "text": "Hello"},
-                        {"start": 0.5, "end": 1.0, "text": "world"}
-                    ]
+                        {"start": 0.5, "end": 1.0, "text": "world"},
+                    ],
                 }
-            ]
+            ],
         }
-        
+
         results = self.tester.test_consistency_with_sample_data(test_data)
-        
+
         # Check that we get results
         assert isinstance(results, list)
         assert len(results) > 0
-        
+
         # Check that each result has the expected attributes
         for result in results:
-            assert hasattr(result, 'provider')
-            assert hasattr(result, 'confidence_score')
-            assert hasattr(result, 'word_count')
-            assert hasattr(result, 'segment_count')
+            assert hasattr(result, "provider")
+            assert hasattr(result, "confidence_score")
+            assert hasattr(result, "word_count")
+            assert hasattr(result, "segment_count")

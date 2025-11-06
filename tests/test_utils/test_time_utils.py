@@ -5,7 +5,7 @@ import pytest
 from wtf_transcript_converter.utils.time_utils import (
     convert_timestamp,
     validate_timing,
-    get_current_iso_timestamp
+    get_current_iso_timestamp,
 )
 
 
@@ -67,15 +67,15 @@ class TestTimeUtils:
     def test_get_current_iso_timestamp(self):
         """Test getting current ISO timestamp."""
         timestamp = get_current_iso_timestamp()
-        
+
         # Should be a string
         assert isinstance(timestamp, str)
-        
+
         # Should end with 'Z' (UTC indicator)
-        assert timestamp.endswith('Z')
-        
+        assert timestamp.endswith("Z")
+
         # Should contain 'T' (ISO 8601 format)
-        assert 'T' in timestamp
-        
+        assert "T" in timestamp
+
         # Should be a reasonable length
         assert len(timestamp) > 10
