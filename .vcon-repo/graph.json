@@ -1,0 +1,642 @@
+{
+  "schema_version": "1.0.0",
+  "repo": "wtf-transcript-converter",
+  "repo_version": "0.1.1",
+  "archetype": "python-library",
+  "generated_at": "2026-04-16T15:15:46.836436+00:00",
+  "stats": {
+    "node_count": 71,
+    "edge_count": 29
+  },
+  "nodes": [
+    {
+      "id": "dependency:pydantic",
+      "type": "dependency",
+      "name": "pydantic",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:click",
+      "type": "dependency",
+      "name": "click",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:rich",
+      "type": "dependency",
+      "name": "rich",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:jsonschema",
+      "type": "dependency",
+      "name": "jsonschema",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:python-dateutil",
+      "type": "dependency",
+      "name": "python-dateutil",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:pytest",
+      "type": "dependency",
+      "name": "pytest",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:pytest-cov",
+      "type": "dependency",
+      "name": "pytest-cov",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:pytest-mock",
+      "type": "dependency",
+      "name": "pytest-mock",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "dependency:twine",
+      "type": "dependency",
+      "name": "twine",
+      "file": "pyproject.toml"
+    },
+    {
+      "id": "function:cross_provider",
+      "type": "function",
+      "name": "cross_provider",
+      "file": "src/wtf_transcript_converter/cli/cross_provider.py",
+      "line": 22
+    },
+    {
+      "id": "function:consistency",
+      "type": "function",
+      "name": "consistency",
+      "file": "src/wtf_transcript_converter/cli/cross_provider.py",
+      "line": 36
+    },
+    {
+      "id": "function:performance",
+      "type": "function",
+      "name": "performance",
+      "file": "src/wtf_transcript_converter/cli/cross_provider.py",
+      "line": 128
+    },
+    {
+      "id": "function:quality",
+      "type": "function",
+      "name": "quality",
+      "file": "src/wtf_transcript_converter/cli/cross_provider.py",
+      "line": 219
+    },
+    {
+      "id": "function:all",
+      "type": "function",
+      "name": "all",
+      "file": "src/wtf_transcript_converter/cli/cross_provider.py",
+      "line": 315
+    },
+    {
+      "id": "function:main",
+      "type": "function",
+      "name": "main",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 53
+    },
+    {
+      "id": "function:to_wtf",
+      "type": "function",
+      "name": "to_wtf",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 79
+    },
+    {
+      "id": "function:from_wtf",
+      "type": "function",
+      "name": "from_wtf",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 161
+    },
+    {
+      "id": "function:validate",
+      "type": "function",
+      "name": "validate",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 223
+    },
+    {
+      "id": "function:batch",
+      "type": "function",
+      "name": "batch",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 245
+    },
+    {
+      "id": "function:providers",
+      "type": "function",
+      "name": "providers",
+      "file": "src/wtf_transcript_converter/cli/main.py",
+      "line": 269
+    },
+    {
+      "id": "class:BaseConverter",
+      "type": "class",
+      "name": "BaseConverter",
+      "file": "src/wtf_transcript_converter/core/converter.py",
+      "line": 16
+    },
+    {
+      "id": "class:ToWTFConverter",
+      "type": "class",
+      "name": "ToWTFConverter",
+      "file": "src/wtf_transcript_converter/core/converter.py",
+      "line": 25
+    },
+    {
+      "id": "class:FromWTFConverter",
+      "type": "class",
+      "name": "FromWTFConverter",
+      "file": "src/wtf_transcript_converter/core/converter.py",
+      "line": 34
+    },
+    {
+      "id": "class:WTFTranscript",
+      "type": "class",
+      "name": "WTFTranscript",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 14
+    },
+    {
+      "id": "class:WTFSegment",
+      "type": "class",
+      "name": "WTFSegment",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 43
+    },
+    {
+      "id": "class:WTFWord",
+      "type": "class",
+      "name": "WTFWord",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 74
+    },
+    {
+      "id": "class:WTFSpeaker",
+      "type": "class",
+      "name": "WTFSpeaker",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 103
+    },
+    {
+      "id": "class:WTFAudio",
+      "type": "class",
+      "name": "WTFAudio",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 113
+    },
+    {
+      "id": "class:WTFMetadata",
+      "type": "class",
+      "name": "WTFMetadata",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 123
+    },
+    {
+      "id": "class:WTFQuality",
+      "type": "class",
+      "name": "WTFQuality",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 163
+    },
+    {
+      "id": "class:WTFExtensions",
+      "type": "class",
+      "name": "WTFExtensions",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 184
+    },
+    {
+      "id": "class:WTFDocument",
+      "type": "class",
+      "name": "WTFDocument",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 191
+    },
+    {
+      "id": "class:VConWTFAttachment",
+      "type": "class",
+      "name": "VConWTFAttachment",
+      "file": "src/wtf_transcript_converter/core/models.py",
+      "line": 240
+    },
+    {
+      "id": "function:validate_wtf_document",
+      "type": "function",
+      "name": "validate_wtf_document",
+      "file": "src/wtf_transcript_converter/core/validator.py",
+      "line": 13
+    },
+    {
+      "id": "function:validate_confidence_score",
+      "type": "function",
+      "name": "validate_confidence_score",
+      "file": "src/wtf_transcript_converter/core/validator.py",
+      "line": 181
+    },
+    {
+      "id": "function:validate_timestamp",
+      "type": "function",
+      "name": "validate_timestamp",
+      "file": "src/wtf_transcript_converter/core/validator.py",
+      "line": 195
+    },
+    {
+      "id": "function:validate_language_code",
+      "type": "function",
+      "name": "validate_language_code",
+      "file": "src/wtf_transcript_converter/core/validator.py",
+      "line": 214
+    },
+    {
+      "id": "class:ConsistencyResult",
+      "type": "class",
+      "name": "ConsistencyResult",
+      "file": "src/wtf_transcript_converter/cross_provider/consistency.py",
+      "line": 24
+    },
+    {
+      "id": "class:CrossProviderConsistencyTester",
+      "type": "class",
+      "name": "CrossProviderConsistencyTester",
+      "file": "src/wtf_transcript_converter/cross_provider/consistency.py",
+      "line": 38
+    },
+    {
+      "id": "class:PerformanceMetrics",
+      "type": "class",
+      "name": "PerformanceMetrics",
+      "file": "src/wtf_transcript_converter/cross_provider/performance.py",
+      "line": 27
+    },
+    {
+      "id": "class:PerformanceBenchmark",
+      "type": "class",
+      "name": "PerformanceBenchmark",
+      "file": "src/wtf_transcript_converter/cross_provider/performance.py",
+      "line": 39
+    },
+    {
+      "id": "class:TestPerformanceBenchmark",
+      "type": "class",
+      "name": "TestPerformanceBenchmark",
+      "file": "src/wtf_transcript_converter/cross_provider/performance.py",
+      "line": 299
+    },
+    {
+      "id": "class:QualityMetrics",
+      "type": "class",
+      "name": "QualityMetrics",
+      "file": "src/wtf_transcript_converter/cross_provider/quality.py",
+      "line": 26
+    },
+    {
+      "id": "class:QualityComparator",
+      "type": "class",
+      "name": "QualityComparator",
+      "file": "src/wtf_transcript_converter/cross_provider/quality.py",
+      "line": 45
+    },
+    {
+      "id": "class:TestQualityComparison",
+      "type": "class",
+      "name": "TestQualityComparison",
+      "file": "src/wtf_transcript_converter/cross_provider/quality.py",
+      "line": 384
+    },
+    {
+      "id": "class:ConversionError",
+      "type": "class",
+      "name": "ConversionError",
+      "file": "src/wtf_transcript_converter/exceptions.py",
+      "line": 6
+    },
+    {
+      "id": "class:ValidationError",
+      "type": "class",
+      "name": "ValidationError",
+      "file": "src/wtf_transcript_converter/exceptions.py",
+      "line": 39
+    },
+    {
+      "id": "class:ProviderError",
+      "type": "class",
+      "name": "ProviderError",
+      "file": "src/wtf_transcript_converter/exceptions.py",
+      "line": 72
+    },
+    {
+      "id": "class:ConfigurationError",
+      "type": "class",
+      "name": "ConfigurationError",
+      "file": "src/wtf_transcript_converter/exceptions.py",
+      "line": 108
+    },
+    {
+      "id": "class:AudioProcessingError",
+      "type": "class",
+      "name": "AudioProcessingError",
+      "file": "src/wtf_transcript_converter/exceptions.py",
+      "line": 135
+    },
+    {
+      "id": "class:AssemblyAIConverter",
+      "type": "class",
+      "name": "AssemblyAIConverter",
+      "file": "src/wtf_transcript_converter/providers/assemblyai.py",
+      "line": 24
+    },
+    {
+      "id": "class:BaseProviderConverter",
+      "type": "class",
+      "name": "BaseProviderConverter",
+      "file": "src/wtf_transcript_converter/providers/base.py",
+      "line": 14
+    },
+    {
+      "id": "class:CanaryConverter",
+      "type": "class",
+      "name": "CanaryConverter",
+      "file": "src/wtf_transcript_converter/providers/canary.py",
+      "line": 36
+    },
+    {
+      "id": "class:DeepgramConverter",
+      "type": "class",
+      "name": "DeepgramConverter",
+      "file": "src/wtf_transcript_converter/providers/deepgram.py",
+      "line": 24
+    },
+    {
+      "id": "class:ParakeetConverter",
+      "type": "class",
+      "name": "ParakeetConverter",
+      "file": "src/wtf_transcript_converter/providers/parakeet.py",
+      "line": 36
+    },
+    {
+      "id": "class:RevAIConverter",
+      "type": "class",
+      "name": "RevAIConverter",
+      "file": "src/wtf_transcript_converter/providers/rev_ai.py",
+      "line": 26
+    },
+    {
+      "id": "class:WhisperConverter",
+      "type": "class",
+      "name": "WhisperConverter",
+      "file": "src/wtf_transcript_converter/providers/whisper.py",
+      "line": 24
+    },
+    {
+      "id": "function:normalize_confidence",
+      "type": "function",
+      "name": "normalize_confidence",
+      "file": "src/wtf_transcript_converter/utils/confidence_utils.py",
+      "line": 10
+    },
+    {
+      "id": "function:calculate_quality_metrics",
+      "type": "function",
+      "name": "calculate_quality_metrics",
+      "file": "src/wtf_transcript_converter/utils/confidence_utils.py",
+      "line": 26
+    },
+    {
+      "id": "function:is_valid_bcp47",
+      "type": "function",
+      "name": "is_valid_bcp47",
+      "file": "src/wtf_transcript_converter/utils/language_utils.py",
+      "line": 10
+    },
+    {
+      "id": "function:normalize_language_code",
+      "type": "function",
+      "name": "normalize_language_code",
+      "file": "src/wtf_transcript_converter/utils/language_utils.py",
+      "line": 26
+    },
+    {
+      "id": "function:convert_timestamp",
+      "type": "function",
+      "name": "convert_timestamp",
+      "file": "src/wtf_transcript_converter/utils/time_utils.py",
+      "line": 10
+    },
+    {
+      "id": "function:validate_timing",
+      "type": "function",
+      "name": "validate_timing",
+      "file": "src/wtf_transcript_converter/utils/time_utils.py",
+      "line": 29
+    },
+    {
+      "id": "function:get_current_iso_timestamp",
+      "type": "function",
+      "name": "get_current_iso_timestamp",
+      "file": "src/wtf_transcript_converter/utils/time_utils.py",
+      "line": 46
+    },
+    {
+      "id": "config:ASSEMBLYAI_API_KEY",
+      "type": "config",
+      "name": "ASSEMBLYAI_API_KEY",
+      "file": "tests/conftest_integration.py"
+    },
+    {
+      "id": "config:DEEPGRAM_API_KEY",
+      "type": "config",
+      "name": "DEEPGRAM_API_KEY",
+      "file": "tests/conftest_integration.py"
+    },
+    {
+      "id": "config:HF_TOKEN",
+      "type": "config",
+      "name": "HF_TOKEN",
+      "file": "src/wtf_transcript_converter/providers/canary.py"
+    },
+    {
+      "id": "config:HUGGINGFACE_HUB_TOKEN",
+      "type": "config",
+      "name": "HUGGINGFACE_HUB_TOKEN",
+      "file": "src/wtf_transcript_converter/providers/canary.py"
+    },
+    {
+      "id": "config:OPENAI_API_KEY",
+      "type": "config",
+      "name": "OPENAI_API_KEY",
+      "file": "tests/conftest_integration.py"
+    },
+    {
+      "id": "config:REV_AI_API_KEY",
+      "type": "config",
+      "name": "REV_AI_API_KEY",
+      "file": "tests/test_real_api_integration.py"
+    },
+    {
+      "id": "document:readme-md",
+      "type": "document",
+      "name": "README.md",
+      "file": "README.md"
+    }
+  ],
+  "edges": [
+    {
+      "from": "class:BaseConverter",
+      "to": "class:ABC",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ToWTFConverter",
+      "to": "class:BaseConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:FromWTFConverter",
+      "to": "class:BaseConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFTranscript",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFSegment",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFWord",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFSpeaker",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFAudio",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFMetadata",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFQuality",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFExtensions",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WTFDocument",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:VConWTFAttachment",
+      "to": "class:BaseModel",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ConversionError",
+      "to": "class:Exception",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ValidationError",
+      "to": "class:Exception",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ProviderError",
+      "to": "class:Exception",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ConfigurationError",
+      "to": "class:Exception",
+      "type": "inherits"
+    },
+    {
+      "from": "class:AudioProcessingError",
+      "to": "class:Exception",
+      "type": "inherits"
+    },
+    {
+      "from": "class:AssemblyAIConverter",
+      "to": "class:ToWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:AssemblyAIConverter",
+      "to": "class:FromWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:BaseProviderConverter",
+      "to": "class:ToWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:BaseProviderConverter",
+      "to": "class:FromWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:CanaryConverter",
+      "to": "class:BaseProviderConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:DeepgramConverter",
+      "to": "class:ToWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:DeepgramConverter",
+      "to": "class:FromWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:ParakeetConverter",
+      "to": "class:BaseProviderConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:RevAIConverter",
+      "to": "class:BaseProviderConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WhisperConverter",
+      "to": "class:ToWTFConverter",
+      "type": "inherits"
+    },
+    {
+      "from": "class:WhisperConverter",
+      "to": "class:FromWTFConverter",
+      "type": "inherits"
+    }
+  ],
+  "subsystems": []
+}
