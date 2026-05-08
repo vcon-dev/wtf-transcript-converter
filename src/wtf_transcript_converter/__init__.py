@@ -5,7 +5,7 @@ A Python library for converting transcript JSONs to/from the IETF World Transcri
 Supports major transcription providers including Whisper, Deepgram, AssemblyAI, and more.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "vCon Development Team"
 __email__ = "vcon@ietf.org"
 

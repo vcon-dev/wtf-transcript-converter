@@ -236,9 +236,15 @@ class WTFDocument(BaseModel):
         return self
 
 
-# Placeholder for vcon-lib integration
+# Placeholder for vcon-lib integration.
+#
+# Note: per draft-howe-vcon-wtf-extension-02 §5.3, WTF transcriptions belong
+# in `vcon.analysis[]`, not `vcon.attachments[]`. The legacy class name is
+# kept for backwards-import compatibility; a real `VConWTFAnalysis` helper
+# will replace it once `vcon-lib` is wired in. Until then, see the README
+# "vCon Integration" section for the manual analysis-entry pattern.
 class VConWTFAttachment(BaseModel):
-    """Wrapper for WTF transcription as vCon attachment."""
+    """Deprecated placeholder. WTF results go in `analysis[]`, not `attachments[]`."""
 
-    # TODO: Implement when vcon-lib is available
+    # TODO: Replace with `VConWTFAnalysis` builder once vcon-lib is available.
     pass
