@@ -62,15 +62,34 @@ vcon-wtf batch --input-dir ./transcripts --output-dir ./wtf --provider auto
 
 ### vCon Integration
 
-```python
-from vcon import Vcon
-from wtf_transcript_converter import VConWTFAttachment
+WTF documents are emitted into a vCon's `analysis[]` array per
+[draft-howe-vcon-wtf-extension-02 §5.3](https://datatracker.ietf.org/doc/html/draft-howe-vcon-wtf-extension-02).
+Build the analysis entry directly from a converted WTF document:
 
-# Create vCon container with WTF transcription
-vcon = Vcon()
-wtf_attachment = VConWTFAttachment.create_from_wtf(wtf_doc)
-vcon = wtf_attachment.add_to_vcon(vcon)
+```python
+import json
+from vcon import Vcon
+from wtf_transcript_converter.providers import WhisperConverter
+
+vcon = Vcon.build_new()
+vcon.vcon_dict["vcon"] = "0.4.0"
+
+wtf_doc = WhisperConverter().convert(whisper_data)
+
+vcon.vcon_dict.setdefault("analysis", []).append({
+    "type": "wtf_transcription",
+    "dialog": 0,
+    "vendor": "openai-whisper",
+    "product": "whisper-large-v3",
+    "schema": "https://datatracker.ietf.org/doc/html/draft-howe-vcon-wtf-extension-02",
+    "encoding": "json",
+    "body": json.dumps(wtf_doc.model_dump(exclude_none=True)),
+})
+vcon.add_extension("wtf_transcription")
 ```
+
+> Note: a higher-level `VConWTFAnalysis` helper is planned but not yet
+> implemented (see `core/models.py`). Use the snippet above until it lands.
 
 ## Supported Providers
 
@@ -212,6 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Documentation**: https://vcon-wtf.readthedocs.io
 - **vCon Specification**: https://github.com/vcon-dev/draft-ietf-vcon-core
 - **WTF Extension Draft**: https://github.com/vcon-dev/draft-howe-vcon-wtf-extension
+- **WTF Extension (datatracker, -02)**: https://datatracker.ietf.org/doc/html/draft-howe-vcon-wtf-extension-02
 
 ## Acknowledgments
 
