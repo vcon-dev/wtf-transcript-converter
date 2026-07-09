@@ -41,7 +41,7 @@ class TestWhisperConverter:
 
         # Validate metadata
         assert wtf_doc.metadata.provider == "whisper"
-        assert wtf_doc.metadata.model == "whisper-1"
+        assert wtf_doc.metadata.model == "unknown"
         assert wtf_doc.metadata.audio.duration == sample_whisper_data["duration"]
 
         # Validate extensions
@@ -321,3 +321,17 @@ class TestWhisperConverter:
         assert whisper_ext["compression_ratio"] == 1.5
         assert whisper_ext["avg_logprob"] == -0.3
         assert whisper_ext["no_speech_prob"] == 0.02
+
+    def test_custom_metadata(self):
+        """Test that custom provider and model names are properly set and propagated to metadata."""
+        whisper_output = {
+            "model": "test-model",
+            "text": "Hello world.",
+            "segments": [{"id": 0, "start": 0.0, "end": 1.0, "text": "Hello world."}],
+            "language": "en",
+        }
+
+        wtf_doc = WhisperConverter(provider_name="whisperx").convert_to_wtf(whisper_output)
+
+        assert wtf_doc.metadata.provider == "whisperx"
+        assert wtf_doc.metadata.model == "test-model"
