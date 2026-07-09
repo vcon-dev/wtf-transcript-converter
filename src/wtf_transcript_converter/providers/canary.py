@@ -6,7 +6,7 @@ This module provides conversion between Canary (NVIDIA NeMo) transcription forma
 
 import os
 import re
-from typing import Any, Dict, List
+from typing import Any
 
 from wtf_transcript_converter.core.models import (
     WTFAudio,
@@ -75,7 +75,7 @@ class CanaryConverter(BaseProviderConverter):
             except Exception as e:
                 raise RuntimeError(f"Failed to load Canary model {self.model_name}: {e}")
 
-    def transcribe_audio(self, audio_path: str, language: str = "en") -> Dict[str, Any]:
+    def transcribe_audio(self, audio_path: str, language: str = "en") -> dict[str, Any]:
         """
         Transcribe audio file using Canary model.
 
@@ -110,8 +110,8 @@ class CanaryConverter(BaseProviderConverter):
             raise RuntimeError(f"Canary transcription failed: {e}")
 
     def _format_canary_result(
-        self, result: Dict[str, Any], audio_path: str, sample_rate: int
-    ) -> Dict[str, Any]:
+        self, result: dict[str, Any], audio_path: str, sample_rate: int
+    ) -> dict[str, Any]:
         """Format Canary pipeline result to our expected structure."""
         text = result.get("text", "")
         chunks = result.get("chunks", [])
@@ -174,7 +174,7 @@ class CanaryConverter(BaseProviderConverter):
             "sample_rate": sample_rate,
         }
 
-    def convert_to_wtf(self, canary_data: Dict[str, Any]) -> WTFDocument:
+    def convert_to_wtf(self, canary_data: dict[str, Any]) -> WTFDocument:
         """
         Convert Canary JSON data to WTF format.
 
@@ -255,7 +255,7 @@ class CanaryConverter(BaseProviderConverter):
             streaming=None,
         )
 
-    def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
+    def convert_from_wtf(self, wtf_doc: WTFDocument) -> dict[str, Any]:
         """
         Convert WTF document to Canary JSON format.
 
@@ -265,7 +265,7 @@ class CanaryConverter(BaseProviderConverter):
         Returns:
             Canary JSON data structure
         """
-        canary_data: Dict[str, Any] = {
+        canary_data: dict[str, Any] = {
             "text": wtf_doc.transcript.text,
             "language": (
                 wtf_doc.transcript.language.split("-")[0]
@@ -316,7 +316,7 @@ class CanaryConverter(BaseProviderConverter):
 
         return canary_data
 
-    def _calculate_overall_confidence(self, canary_data: Dict[str, Any]) -> float:
+    def _calculate_overall_confidence(self, canary_data: dict[str, Any]) -> float:
         """Calculate overall confidence from Canary data."""
         words = canary_data.get("words", [])
         if not words:
@@ -325,7 +325,7 @@ class CanaryConverter(BaseProviderConverter):
         confidences = [float(word.get("confidence", 0.0)) for word in words]
         return float(sum(confidences) / len(confidences))
 
-    def _extract_speakers(self, words_data: List[Dict[str, Any]]) -> Dict[str, WTFSpeaker]:
+    def _extract_speakers(self, words_data: list[dict[str, Any]]) -> dict[str, WTFSpeaker]:
         """Extract speaker information from Canary words data."""
         # Canary doesn't do speaker diarization by default
         # Return a single default speaker
@@ -345,7 +345,7 @@ class CanaryConverter(BaseProviderConverter):
             )
         }
 
-    def _convert_canary_words(self, words_data: List[Dict[str, Any]]) -> List[WTFWord]:
+    def _convert_canary_words(self, words_data: list[dict[str, Any]]) -> list[WTFWord]:
         """Convert Canary words to WTF words."""
         words = []
         for word_data in words_data:
@@ -368,8 +368,8 @@ class CanaryConverter(BaseProviderConverter):
         return words
 
     def _convert_canary_segments(
-        self, segments_data: List[Dict[str, Any]], wtf_words: List[WTFWord]
-    ) -> List[WTFSegment]:
+        self, segments_data: list[dict[str, Any]], wtf_words: list[WTFWord]
+    ) -> list[WTFSegment]:
         """Convert Canary segments to WTF segments."""
         segments = []
         for segment_data in segments_data:
@@ -392,7 +392,7 @@ class CanaryConverter(BaseProviderConverter):
         return bool(re.fullmatch(r"^\W+$", word_text))
 
     def _calculate_quality_metrics(
-        self, canary_data: Dict[str, Any], wtf_words: List[WTFWord]
+        self, canary_data: dict[str, Any], wtf_words: list[WTFWord]
     ) -> WTFQuality:
         """Calculate quality metrics based on Canary data."""
         low_confidence_words = sum(1 for word in wtf_words if word.confidence < 0.5)

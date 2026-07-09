@@ -5,9 +5,10 @@ This module provides conversion between Whisper JSON format and WTF format.
 """
 
 import math
-from typing import Any, Dict, List
+from typing import Any
 
-from ..core.converter import FromWTFConverter, ToWTFConverter
+from wtf_transcript_converter.providers.base import BaseProviderConverter
+
 from ..core.models import (
     WTFAudio,
     WTFDocument,
@@ -21,13 +22,14 @@ from ..utils.confidence_utils import normalize_confidence
 from ..utils.language_utils import normalize_language_code
 
 
-class WhisperConverter(ToWTFConverter, FromWTFConverter):
+class WhisperConverter(BaseProviderConverter):
     """Converter for Whisper JSON format to/from WTF format."""
 
-    def __init__(self) -> None:
-        self.provider_name = "whisper"
+    def __init__(self, provider_name: str = "whisper", model_name: str = "unknown") -> None:
+        super().__init__(provider_name)
+        self.model_name = model_name
 
-    def convert_to_wtf(self, whisper_data: Dict[str, Any]) -> WTFDocument:
+    def convert_to_wtf(self, whisper_data: dict[str, Any]) -> WTFDocument:
         """
         Convert Whisper JSON data to WTF format.
 
@@ -36,6 +38,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
 
         Returns:
             WTF document
+
         """
         # Extract basic transcript information
         transcript = WTFTranscript(
@@ -86,8 +89,8 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
         metadata = WTFMetadata(
             created_at=self._get_timestamp(),
             processed_at=self._get_timestamp(),
-            provider="whisper",
-            model=whisper_data.get("model", "whisper-1"),
+            provider=self.provider_name,
+            model=whisper_data.get("model", self.model_name),
             processing_time=whisper_data.get("processing_time"),
             audio=WTFAudio(
                 duration=whisper_data.get("duration", 0.0),
@@ -135,7 +138,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
             streaming=None,
         )
 
-    def convert_from_wtf(self, wtf_doc: WTFDocument) -> Dict[str, Any]:
+    def convert_from_wtf(self, wtf_doc: WTFDocument) -> dict[str, Any]:
         """
         Convert WTF document to Whisper JSON format.
 
@@ -144,6 +147,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
 
         Returns:
             Whisper JSON data structure
+
         """
         # Convert segments back to Whisper format
         segments = []
@@ -206,7 +210,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
             # Assume this is Whisper data, convert to WTF
             return self.convert_to_wtf(data)
 
-    def _calculate_overall_confidence(self, whisper_data: Dict[str, Any]) -> float:
+    def _calculate_overall_confidence(self, whisper_data: dict[str, Any]) -> float:
         """Calculate overall confidence from Whisper data."""
         segments = whisper_data.get("segments", [])
         if not segments:
@@ -225,7 +229,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
 
         return 0.5  # Default confidence
 
-    def _normalize_whisper_confidence(self, data: Dict[str, Any]) -> float:
+    def _normalize_whisper_confidence(self, data: dict[str, Any]) -> float:
         """Normalize Whisper confidence scores to [0.0, 1.0] range."""
         if "avg_logprob" in data:
             # Convert log probability to confidence
@@ -242,11 +246,11 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
 
     def _get_timestamp(self) -> str:
         """Get current timestamp in ISO 8601 format."""
-        from datetime import datetime, timezone
+        import datetime
 
-        return datetime.now(timezone.utc).isoformat()
+        return datetime.datetime.now(datetime.UTC).isoformat()
 
-    def _extract_whisper_options(self, whisper_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _extract_whisper_options(self, whisper_data: dict[str, Any]) -> dict[str, Any]:
         """Extract Whisper-specific options."""
         return {
             "temperature": whisper_data.get("temperature", 0.0),
@@ -254,7 +258,7 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
             "no_speech_prob": whisper_data.get("no_speech_prob", 0.01),
         }
 
-    def _assess_audio_quality(self, whisper_data: Dict[str, Any]) -> str:
+    def _assess_audio_quality(self, whisper_data: dict[str, Any]) -> str:
         """Assess audio quality based on Whisper metrics."""
         no_speech_prob = whisper_data.get("no_speech_prob", 0.01)
         if no_speech_prob < 0.1:
@@ -264,41 +268,41 @@ class WhisperConverter(ToWTFConverter, FromWTFConverter):
         else:
             return "low"
 
-    def _count_low_confidence_words(self, words: List[WTFWord]) -> int:
+    def _count_low_confidence_words(self, words: list[WTFWord]) -> int:
         """Count words with low confidence scores."""
         return sum(1 for word in words if word.confidence < 0.5)
 
-    def _extract_warnings(self, whisper_data: Dict[str, Any]) -> List[str]:
+    def _extract_warnings(self, whisper_data: list[str, Any]) -> list[str]:
         """Extract processing warnings from Whisper data."""
         warnings = []
         if whisper_data.get("no_speech_prob", 0) > 0.5:
             warnings.append("High probability of no speech detected")
         return warnings
 
-    def _extract_temperature(self, whisper_data: Dict[str, Any]) -> float:
+    def _extract_temperature(self, whisper_data: dict[str, Any]) -> float:
         """Extract temperature from Whisper data."""
         return float(whisper_data.get("temperature", 0.0))
 
-    def _extract_compression_ratio(self, whisper_data: Dict[str, Any]) -> float:
+    def _extract_compression_ratio(self, whisper_data: dict[str, Any]) -> float:
         """Extract compression ratio from Whisper data."""
         return float(whisper_data.get("compression_ratio", 1.0))
 
-    def _extract_avg_logprob(self, whisper_data: Dict[str, Any]) -> float:
+    def _extract_avg_logprob(self, whisper_data: dict[str, Any]) -> float:
         """Extract average log probability from Whisper data."""
         return float(whisper_data.get("avg_logprob", -0.5))
 
-    def _extract_no_speech_prob(self, whisper_data: Dict[str, Any]) -> float:
+    def _extract_no_speech_prob(self, whisper_data: dict[str, Any]) -> float:
         """Extract no speech probability from Whisper data."""
         return float(whisper_data.get("no_speech_prob", 0.01))
 
-    def _extract_tokens(self, whisper_data: Dict[str, Any]) -> List[int]:
+    def _extract_tokens(self, whisper_data: dict[str, Any]) -> list[int]:
         """Extract tokens from Whisper data."""
         tokens = []
         for segment in whisper_data.get("segments", []):
             tokens.extend(segment.get("tokens", []))
         return tokens
 
-    def _convert_to_whisper_tokens(self, text: str) -> List[int]:
+    def _convert_to_whisper_tokens(self, text: str) -> list[int]:
         """Convert text to Whisper token IDs (placeholder implementation)."""
         # This is a placeholder - real implementation would use Whisper's tokenizer
         return [1] * len(text.split())  # Simplified token representation
